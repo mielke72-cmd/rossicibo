@@ -1,24 +1,20 @@
-<!DOCTYPE html><html><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta http-equiv="x-dns-prefetch-control" content="off"><script src="https://puc.poecdn.net/authenticated_preview_page/standard.3ef2c256959faf5a756d.js"></script>
-    <meta charset="utf-8">
-    <title>Poe</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-  <script src="https://puc.poecdn.net/authenticated_preview_page/disableWebRTC.9710cebe07429a9e8e06.js"></script><meta name="x-poe-allow-downloads" content="true"><meta name="x-poe-datastore-behavior" content="disabled"><script src="https://puc.poecdn.net/authenticated_preview_page/tw.50ec1b0612bf5b0c30a5.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/deps.faccd16000d314dc16d5.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/exports.b0f0f482cdeb5302b0b9.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/renderer.75c73ae6b4235f62945a.js"></script><script>Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _framermotion = require('framer-motion');
-
-
-
-
-var _lucidereact = require('lucide-react');
+             import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  ChevronLeft, ChevronRight, ShoppingCart, BookOpen, Calendar,
+  X, Clock, Flame, Check, ChefHat, Search, Coffee, Soup, Utensils,
+  Dumbbell, Leaf, Target, Sparkles
+} from 'lucide-react';
 
 // ============== FAMILY ==============
 const FAMILY = {
-  teen: { name: 'Jamie', age: 17, icon: _lucidereact.Dumbbell, accent: 'bg-blue-500',
+  teen: { name: 'Jamie', age: 17, icon: Dumbbell, accent: 'bg-blue-500',
     text: 'text-blue-700', light: 'bg-blue-50', border: 'border-blue-200',
     ring: 'ring-blue-300', goal: 'Build Muscle' },
-  mom:  { name: 'Elena', age: 50, icon: _lucidereact.Leaf, accent: 'bg-emerald-500',
+  mom:  { name: 'Elena', age: 50, icon: Leaf, accent: 'bg-emerald-500',
     text: 'text-emerald-700', light: 'bg-emerald-50', border: 'border-emerald-200',
     ring: 'ring-emerald-300', goal: 'Burn Visceral Fat • Vegetarian' },
-  dad:  { name: 'Christian', age: 53, icon: _lucidereact.Target, accent: 'bg-orange-500',
+  dad:  { name: 'Christian', age: 53, icon: Target, accent: 'bg-orange-500',
     text: 'text-orange-700', light: 'bg-orange-50', border: 'border-orange-200',
     ring: 'ring-orange-300', goal: 'Lean & Strong' }
 };
@@ -284,27 +280,42 @@ const RECIPES = {
 };
 
 // ============== WEEKLY PLAN ==============
+// ✅ Week now starts MONDAY (index 0 = Mon … index 6 = Sun)
 const WEEK_A = [
-  { B:['s_berry','m_yogurt','d_egg'],     L:'w_mezze',   D:'dn_dal',           familyLunch:true },
+  // Mon
   { B:['s_green','m_scramble','d_yogurt'],L:'l_chickpea',D:'dn_moroccan',      familyLunch:false },
+  // Tue
   { B:['s_choco','m_cottage','d_cottage'],L:'l_lentil',  D:'dn_peppers',       familyLunch:false },
+  // Wed
   { B:['s_tropical','m_avo','d_toast'],   L:'l_buddha',  D:'dn_stirfry',       familyLunch:false },
+  // Thu
   { B:['s_pbj','m_tofu','d_smoothie'],    L:'l_tofu',    D:'dn_thai',          familyLunch:false },
+  // Fri
   { B:['s_mocha','m_oats','d_eggs2'],     L:'l_caprese', D:'dn_lemon',         familyLunch:false },
-  { B:['s_oat','m_omelet','d_banana'],    L:'w_grain',   D:'dn_chickpea_curry',familyLunch:true }
+  // Sat
+  { B:['s_oat','m_omelet','d_banana'],    L:'w_grain',   D:'dn_chickpea_curry',familyLunch:true },
+  // Sun
+  { B:['s_berry','m_yogurt','d_egg'],     L:'w_mezze',   D:'dn_dal',           familyLunch:true }
 ];
 const WEEK_B = [
-  { B:['s_berry','m_yogurt','d_egg'],     L:'w_grain',   D:'dn_eggplant',  familyLunch:true },
+  // Mon
   { B:['s_green','m_scramble','d_yogurt'],L:'l_wrap',    D:'dn_tacos',     familyLunch:false },
+  // Tue
   { B:['s_choco','m_cottage','d_cottage'],L:'l_curry',   D:'dn_shakshuka', familyLunch:false },
+  // Wed
   { B:['s_tropical','m_avo','d_toast'],   L:'l_chickpea',D:'dn_tandoori',  familyLunch:false },
+  // Thu
   { B:['s_pbj','m_tofu','d_smoothie'],    L:'l_lentil',  D:'dn_risotto',   familyLunch:false },
+  // Fri
   { B:['s_mocha','m_oats','d_eggs2'],     L:'l_buddha',  D:'dn_souvlaki',  familyLunch:false },
-  { B:['s_oat','m_omelet','d_banana'],    L:'w_mezze',   D:'dn_burgers',   familyLunch:true }
+  // Sat
+  { B:['s_oat','m_omelet','d_banana'],    L:'w_mezze',   D:'dn_burgers',   familyLunch:true },
+  // Sun
+  { B:['s_berry','m_yogurt','d_egg'],     L:'w_grain',   D:'dn_eggplant',  familyLunch:true }
 ];
 
-// ✅ Updated start date: Sunday April 26, 2026
-const START_DATE = new Date(2026, 3, 26);
+// ✅ Updated start date: Monday April 27, 2026
+const START_DATE = new Date(2026, 3, 27);
 
 function getDate(idx) {
   const d = new Date(START_DATE);
@@ -326,28 +337,28 @@ function fmtShort(d) {
 // ============== SHOPPING LISTS ==============
 const SHOPPING_PATTERNS = [
   {
-    title: 'Mezze • Dal • Moroccan Sheet Pan',
-    produce: ['Bananas (5)','Mixed berries (2 cups)','Frozen mixed berries (1 cup)','Spinach (large bag)','Cucumbers (3)','Cherry tomatoes (2 pints)','Apple (1)','Lemons (5)','Mango (1)','Garlic (1 head)','Yellow onions (3)','Red onions (2)','Red bell peppers (2)','Zucchini (2)','Cauliflower (1 small head)','Parsley (1 bunch)','Mint (1 bunch)','Cilantro (1 bunch)','Fresh dill (small bunch)','Avocado (1)'],
-    protein: ['Eggs (1 dozen)','0% Greek yogurt (large tub)','Feta cheese','Whole milk','Unsweetened almond milk','Boneless chicken thighs (3)','Canned chickpeas (3 cans)','Red lentils (1.5 cups)','Hummus (tub)','Frozen falafel (8 pieces)','Tzatziki (small tub)'],
-    pantry: ['Rolled oats','Vanilla whey protein','Peanut butter','Honey','Chia seeds','Raw almonds','Walnuts','Whole wheat pita (4)','Bulgur','Kalamata olives','Couscous','Brown rice','Light coconut milk (2 cans)','Diced tomatoes (2 cans)','Naan','Olive oil','Spices: cumin, coriander, cinnamon, turmeric, paprika, cayenne, garam masala, oregano','Veg stock cubes']
+    title: 'Moroccan Sheet Pan • Stuffed Peppers',
+    produce: ['Bananas (4)','Mango (1)','Spinach (large bag)','Bell peppers (8 large + 1 red extra)','Cauliflower (1 small head)','Zucchini (3)','Red onions (3)','Yellow onion (1)','Carrots (2)','Cherry tomatoes (1 pint)','Cucumber (1)','Lemons (4)','Garlic (1 head)','Parsley (1 bunch)','Cilantro (1 bunch)','Avocado (1)'],
+    protein: ['Eggs (1 dozen)','0% Greek yogurt (large tub)','Cottage cheese','Feta','Mozzarella (½ cup)','Whole milk','Unsweetened almond milk','Boneless chicken thighs (3)','Canned chickpeas (3 cans)','Canned black beans (1 can)','Red lentils (small bag)'],
+    pantry: ['Rolled oats','Vanilla whey protein','Chocolate protein','Peanut butter','Almond butter','Honey','Chia seeds','Walnuts','Couscous','Quinoa','Diced tomatoes (1 can)','Corn (frozen, 1 cup)','Olive oil','Spices: cumin, coriander, cinnamon, turmeric, paprika, cayenne, oregano, smoked paprika']
   },
   {
-    title: 'Stuffed Peppers • Beef Stir-Fry',
-    produce: ['Bananas (3)','Mango (1)','Pineapple (small)','Bell peppers (8 large)','Carrots (2)','Sweet potato (1 large)','Baby spinach (bag)','Broccoli (4 cups)','Red bell pepper (1)','Spring onions (2)','Garlic (1 head)','Ginger (2 inch piece)','Onion (2)','Cucumber (1)','Avocado (1)','Cherry tomatoes (1 pint)','Lemons (3)'],
-    protein: ['Cottage cheese','0% Greek yogurt','Eggs','Beef sirloin (12 oz)','Canned black beans (1 can)','Canned chickpeas (1 can)','Mozzarella (½ cup)','Feta','Red lentils (1 cup)','Almond milk'],
-    pantry: ['Cocoa powder','Chocolate protein powder','Almond butter','Quinoa','Brown rice','Tahini','Maple syrup','Pumpkin seeds','Sesame seeds','Soy sauce','Rice vinegar','Sesame oil','Cornstarch','Honey','Diced tomatoes (1 can)','Corn (1 cup, frozen ok)','Smoked paprika','Pumpkin seeds','Pita (if needed)']
+    title: 'Beef Stir-Fry • Thai Curry',
+    produce: ['Bananas (4)','Pineapple (small)','Mango (1)','Strawberries (frozen, 1 cup)','Broccoli (4 cups)','Bell peppers (red, 2)','Snap peas (1 cup)','Mushrooms (1 cup)','Zucchini (1)','Spring onions (2)','Garlic (head)','Ginger (2 inch)','Spinach (bag)','Avocado (1)','Cucumber (1)','Lime (2)','Cilantro or Thai basil'],
+    protein: ['Beef sirloin (12 oz)','Extra-firm tofu (2 blocks)','Eggs','0% Greek yogurt','Cottage cheese','Almond milk','Whey protein'],
+    pantry: ['Brown rice','Jasmine rice','Soy sauce','Rice vinegar','Sesame oil','Sesame seeds','Cornstarch','Honey','Red curry paste','Coconut milk (1 can)','Brown sugar','Whole grain bread','Espresso pods','Cocoa']
   },
   {
-    title: 'Thai Curry • Lemon Chicken',
-    produce: ['Strawberries (frozen, 1 cup)','Bananas (3)','Bell peppers (red & assorted)','Snap peas (1 cup)','Mushrooms (4 cups mixed)','Zucchini (2)','Asparagus (2 cups)','Cherry tomatoes (1 pint)','Lemons (4)','Limes (2)','Garlic (head)','Ginger','Thai basil or cilantro','Fresh basil','Parsley'],
-    protein: ['Chicken breasts (2 large)','Halloumi (1 block)','Extra-firm tofu (2 blocks)','Canned cannellini beans (1 can)','Fresh mozzarella balls (¼ cup)','Eggs','Almond milk','Greek yogurt'],
-    pantry: ['Red curry paste','Coconut milk (1 can)','Jasmine rice','Quinoa','Pine nuts','Soy sauce','Brown sugar','Whole grain bread','Balsamic glaze','Olive oil','Espresso pods or instant coffee','Oregano','Thyme','Nutritional yeast']
+    title: 'Lemon Chicken • Chana Masala',
+    produce: ['Mixed berries (2 cups)','Bananas (3)','Asparagus (2 cups)','Cherry tomatoes (1 pint)','Zucchini (1)','Lemons (4)','Limes (1)','Garlic (head)','Ginger','Cilantro','Parsley','Fresh basil (small)','Cucumber (1)','Mushrooms (½ cup)'],
+    protein: ['Chicken breasts (2)','Halloumi (1 block)','Eggs','0% Greek yogurt','Canned cannellini beans (1 can)','Canned chickpeas (2 cans)','Fresh mozzarella balls (¼ cup)','Almond milk'],
+    pantry: ['Quinoa','Basmati rice','Pine nuts','Balsamic glaze','Olive oil','Oregano','Thyme','Garam masala','Coriander','Naan','Rolled oats','Vanilla protein']
   },
   {
-    title: 'Chana Masala • Greek Grain Bowl • Eggplant Parm',
-    produce: ['Mixed berries (2 cups)','Bananas (3)','Apple (1)','Eggplants (2 large)','Arugula (2 cups)','Cucumber (2)','Cherry tomatoes (2 pints)','Red onion (1)','Lemons (4)','Limes (1)','Garlic (head)','Ginger','Cilantro','Parsley','Fresh basil','Mushrooms (1 cup)'],
-    protein: ['Chicken breasts (2)','Halloumi (1 block)','Eggs','0% Greek yogurt','Mozzarella (1.5 cups)','Parmesan (½ cup)','Feta','Canned chickpeas (2 cans)','Cottage cheese (small)'],
-    pantry: ['Rolled oats','Vanilla protein powder','Almond butter','Maple syrup','Vanilla extract','Farro or quinoa','Marinara sauce (2 cups)','Whole wheat breadcrumbs','Italian herbs','Basmati rice','Garam masala','Coriander','Olives (kalamata)','Naan']
+    title: 'Coconut Dal • Mezze Sunday',
+    produce: ['Mixed berries (frozen, 1 cup)','Apple (1)','Spinach (bag)','Cucumbers (2)','Cherry tomatoes (1 pint)','Lemons (4)','Limes (1)','Garlic (head)','Ginger','Onions (2)','Red onion (1)','Mint (small bunch)','Parsley (bunch)','Cilantro','Fresh dill (small)'],
+    protein: ['Eggs (1 dozen)','0% Greek yogurt (large)','Feta','Hummus (tub)','Tzatziki (tub)','Frozen falafel (8)','Red lentils (1.5 cups)','Whey protein','Almond milk'],
+    pantry: ['Brown rice','Light coconut milk (1 can)','Diced tomatoes (1 can)','Veg stock cubes','Naan','Whole wheat pita (4)','Bulgur','Kalamata olives','Curry powder','Coconut oil','Rolled oats','Peanut butter']
   },
   {
     title: 'Tacos • Shakshuka',
@@ -362,10 +373,10 @@ const SHOPPING_PATTERNS = [
     pantry: ['Arborio rice','Veg stock (6 cups)','White wine (1 cup, optional)','Butter','Olive oil','Garam masala','Tandoori spice (or paprika+cumin+turmeric+cayenne)','Mint chutney','Coconut milk (light)','Whole grain bread','Coffee','Cocoa']
   },
   {
-    title: 'Souvlaki • Bean Burgers • Mezze',
-    produce: ['Mixed berries (1 cup)','Bananas (4)','Lemons (4)','Limes (1)','Cucumber (3)','Cherry tomatoes (2 pints)','Lettuce (romaine head)','Tomato (2)','Red onion (2)','Yellow onion (1)','Avocado (2)','Sweet potatoes (2 large)','Garlic (head)','Spinach (bag)','Fresh dill','Parsley','Mint','Cilantro','Bell pepper (1)'],
-    protein: ['Chicken breasts (2)','Halloumi (1 block)','Eggs','0% Greek yogurt','Tzatziki','Hummus (tub)','Feta','Canned black beans (2 cans)','Cottage cheese','Almond milk'],
-    pantry: ['Whole wheat pita (8)','Frozen falafel (8)','Bulgur','Kalamata olives','Whole grain buns (6)','Quinoa','Whole wheat breadcrumbs','Chipotle powder','Smoked paprika','Soy sauce','Mustard','Ketchup','Mocha protein','Rolled oats','Almond butter']
+    title: 'Souvlaki • Bean Burgers • Eggplant Parm',
+    produce: ['Mixed berries (1 cup)','Bananas (4)','Lemons (4)','Limes (1)','Cucumber (3)','Cherry tomatoes (2 pints)','Lettuce (romaine head)','Tomato (3)','Red onion (2)','Yellow onion (1)','Avocado (2)','Sweet potatoes (2 large)','Eggplants (2 large)','Garlic (head)','Spinach (bag)','Fresh dill','Parsley','Mint','Cilantro','Fresh basil','Bell pepper (1)','Arugula (2 cups)'],
+    protein: ['Chicken breasts (2)','Halloumi (1 block)','Eggs','0% Greek yogurt','Tzatziki','Hummus (tub)','Feta','Mozzarella (1.5 cups)','Parmesan (½ cup)','Canned black beans (2 cans)','Cottage cheese','Almond milk'],
+    pantry: ['Whole wheat pita (8)','Frozen falafel (8)','Bulgur','Kalamata olives','Whole grain buns (6)','Quinoa','Whole wheat breadcrumbs','Marinara (2 cups)','Italian herbs','Chipotle powder','Smoked paprika','Soy sauce','Mustard','Ketchup','Mocha protein','Rolled oats','Almond butter','Farro']
   }
 ];
 
@@ -374,19 +385,19 @@ function getShoppingForTrip(tripIdx) {
 }
 
 // ============== APP ==============
- function MealPlanApp() {
-  const [view, setView] = _react.useState.call(void 0, 'today');
-  const [dayIdx, setDayIdx] = _react.useState.call(void 0, 0);
-  const [selectedRecipe, setSelectedRecipe] = _react.useState.call(void 0, null);
-  const [recipeFilter, setRecipeFilter] = _react.useState.call(void 0, 'all');
-  const [search, setSearch] = _react.useState.call(void 0, '');
-  const [checked, setChecked] = _react.useState.call(void 0, {});
-  const [openTrip, setOpenTrip] = _react.useState.call(void 0, 0);
+export default function MealPlanApp() {
+  const [view, setView] = useState('today');
+  const [dayIdx, setDayIdx] = useState(0);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [recipeFilter, setRecipeFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [checked, setChecked] = useState({});
+  const [openTrip, setOpenTrip] = useState(0);
 
-  const day = _react.useMemo.call(void 0, () => getDayPlan(dayIdx), [dayIdx]);
-  const date = _react.useMemo.call(void 0, () => getDate(dayIdx), [dayIdx]);
+  const day = useMemo(() => getDayPlan(dayIdx), [dayIdx]);
+  const date = useMemo(() => getDate(dayIdx), [dayIdx]);
   const tripIdx = Math.floor(dayIdx / 2);
-  const shoppingDays = _react.useMemo.call(void 0, () => {
+  const shoppingDays = useMemo(() => {
     const start = getDate(tripIdx * 2);
     const end = getDate(tripIdx * 2 + 1);
     return `${fmtShort(start)} → ${fmtShort(end)}`;
@@ -404,233 +415,233 @@ function getShoppingForTrip(tripIdx) {
   const planRange = `${fmtShort(START_DATE).replace(',', '')} – ${fmtShort(planEnd).replace(',', '')}`;
 
   return (
-    _react2.default.createElement('div', { className: "min-h-screen bg-gradient-to-br from-amber-50 via-rose-50 to-emerald-50 pb-24"     ,}
-      , _react2.default.createElement('header', { className: "bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-500 text-white shadow-lg"     ,}
-        , _react2.default.createElement('div', { className: "max-w-5xl mx-auto px-4 py-5"   ,}
-          , _react2.default.createElement('div', { className: "flex items-center justify-between flex-wrap gap-3"    ,}
-            , _react2.default.createElement('div', { className: "flex items-center gap-3"  ,}
-              , _react2.default.createElement('div', { className: "bg-white/20 backdrop-blur p-2 rounded-xl"   ,}
-                , _react2.default.createElement(_lucidereact.ChefHat, { className: "w-6 h-6" ,} )
-              )
-              , _react2.default.createElement('div', null
-                , _react2.default.createElement('h1', { className: "text-xl font-bold tracking-tight"  ,}, "Family Kitchen" )
-                , _react2.default.createElement('p', { className: "text-xs text-white/80" ,}, "4-week plan • "   , planRange)
-              )
-            )
-            , _react2.default.createElement('div', { className: "flex gap-2" ,}
-              , Object.entries(FAMILY).map(([k, p]) => {
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-rose-50 to-emerald-50 pb-24">
+      <header className="bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-500 text-white shadow-lg">
+        <div className="max-w-5xl mx-auto px-4 py-5">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-center gap-3">
+              <div className="bg-white/20 backdrop-blur p-2 rounded-xl">
+                <ChefHat className="w-6 h-6" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold tracking-tight">Family Kitchen</h1>
+                <p className="text-xs text-white/80">4-week plan • {planRange}</p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              {Object.entries(FAMILY).map(([k, p]) => {
                 const Icon = p.icon;
                 return (
-                  _react2.default.createElement('div', { key: k, className: "bg-white/15 backdrop-blur rounded-full px-3 py-1.5 flex items-center gap-1.5 text-sm"        ,}
-                    , _react2.default.createElement(Icon, { className: "w-3.5 h-3.5" ,} )
-                    , _react2.default.createElement('span', { className: "font-medium",}, p.name)
-                  )
+                  <div key={k} className="bg-white/15 backdrop-blur rounded-full px-3 py-1.5 flex items-center gap-1.5 text-sm">
+                    <Icon className="w-3.5 h-3.5" />
+                    <span className="font-medium">{p.name}</span>
+                  </div>
                 );
-              })
-            )
-          )
-        )
-      )
+              })}
+            </div>
+          </div>
+        </div>
+      </header>
 
-      , view === 'today' && (
-        _react2.default.createElement('div', { className: "bg-white shadow-sm sticky top-0 z-20"    ,}
-          , _react2.default.createElement('div', { className: "max-w-5xl mx-auto px-4 py-3"   ,}
-            , _react2.default.createElement('div', { className: "flex items-center gap-2"  ,}
-              , _react2.default.createElement('button', {
-                onClick: () => setDayIdx(Math.max(0, dayIdx - 1)),
-                className: "p-2 rounded-full hover:bg-gray-100 disabled:opacity-30"   ,
-                disabled: dayIdx === 0,}
-
-                , _react2.default.createElement(_lucidereact.ChevronLeft, { className: "w-5 h-5" ,} )
-              )
-              , _react2.default.createElement('div', { className: "flex-1 overflow-x-auto" ,}
-                , _react2.default.createElement('div', { className: "flex gap-1.5 pb-1"  ,}
-                  , Array.from({ length: 28 }).map((_, i) => {
+      {view === 'today' && (
+        <div className="bg-white shadow-sm sticky top-0 z-20">
+          <div className="max-w-5xl mx-auto px-4 py-3">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setDayIdx(Math.max(0, dayIdx - 1))}
+                className="p-2 rounded-full hover:bg-gray-100 disabled:opacity-30"
+                disabled={dayIdx === 0}
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <div className="flex-1 overflow-x-auto">
+                <div className="flex gap-1.5 pb-1">
+                  {Array.from({ length: 28 }).map((_, i) => {
                     const d = getDate(i);
                     const isActive = i === dayIdx;
                     const dow = d.toLocaleDateString('en-US', { weekday: 'short' }).slice(0, 1);
                     return (
-                      _react2.default.createElement('button', {
-                        key: i,
-                        onClick: () => setDayIdx(i),
-                        className: `flex-shrink-0 flex flex-col items-center justify-center w-10 h-14 rounded-xl text-xs transition-all
+                      <button
+                        key={i}
+                        onClick={() => setDayIdx(i)}
+                        className={`flex-shrink-0 flex flex-col items-center justify-center w-10 h-14 rounded-xl text-xs transition-all
                           ${isActive
                             ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md scale-105'
-                            : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`,}
-
-                        , _react2.default.createElement('span', { className: "font-medium opacity-70" ,}, dow)
-                        , _react2.default.createElement('span', { className: "text-base font-bold" ,}, d.getDate())
-                      )
+                            : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}
+                      >
+                        <span className="font-medium opacity-70">{dow}</span>
+                        <span className="text-base font-bold">{d.getDate()}</span>
+                      </button>
                     );
-                  })
-                )
-              )
-              , _react2.default.createElement('button', {
-                onClick: () => setDayIdx(Math.min(27, dayIdx + 1)),
-                className: "p-2 rounded-full hover:bg-gray-100 disabled:opacity-30"   ,
-                disabled: dayIdx === 27,}
+                  })}
+                </div>
+              </div>
+              <button
+                onClick={() => setDayIdx(Math.min(27, dayIdx + 1))}
+                className="p-2 rounded-full hover:bg-gray-100 disabled:opacity-30"
+                disabled={dayIdx === 27}
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-                , _react2.default.createElement(_lucidereact.ChevronRight, { className: "w-5 h-5" ,} )
-              )
-            )
-          )
-        )
-      )
+      <main className="max-w-5xl mx-auto px-4 py-6">
+        <AnimatePresence mode="wait">
+          {view === 'today' && (
+            <motion.div key="today" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+              <div className="mb-5">
+                <p className="text-sm text-gray-500 font-medium">Day {dayIdx + 1} of 28</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{fmtDate(date)}</h2>
+                <div className="mt-2 flex flex-wrap gap-2 text-xs">
+                  <span className="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-medium">
+                    🛒 Shopping pair: {shoppingDays}
+                  </span>
+                  {isMeatDinner && (
+                    <span className="bg-orange-100 text-orange-800 px-2.5 py-1 rounded-full font-medium">
+                      🥩 Meat day
+                    </span>
+                  )}
+                  {!isMeatDinner && (
+                    <span className="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-medium">
+                      🌱 Vegetarian day
+                    </span>
+                  )}
+                  {isFamilyLunch && (
+                    <span className="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full font-medium">
+                      👨‍👩‍👦 Family lunch
+                    </span>
+                  )}
+                </div>
+              </div>
 
-      , _react2.default.createElement('main', { className: "max-w-5xl mx-auto px-4 py-6"   ,}
-        , _react2.default.createElement(_framermotion.AnimatePresence, { mode: "wait",}
-          , view === 'today' && (
-            _react2.default.createElement(_framermotion.motion.div, { key: "today", initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 },}
-              , _react2.default.createElement('div', { className: "mb-5",}
-                , _react2.default.createElement('p', { className: "text-sm text-gray-500 font-medium"  ,}, "Day " , dayIdx + 1, " of 28"  )
-                , _react2.default.createElement('h2', { className: "text-2xl md:text-3xl font-bold text-gray-900"   ,}, fmtDate(date))
-                , _react2.default.createElement('div', { className: "mt-2 flex flex-wrap gap-2 text-xs"    ,}
-                  , _react2.default.createElement('span', { className: "bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-medium"     ,}, "🛒 Shopping pair: "
-                       , shoppingDays
-                  )
-                  , isMeatDinner && (
-                    _react2.default.createElement('span', { className: "bg-orange-100 text-orange-800 px-2.5 py-1 rounded-full font-medium"     ,}, "🥩 Meat day"
-
-                    )
-                  )
-                  , !isMeatDinner && (
-                    _react2.default.createElement('span', { className: "bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-medium"     ,}, "🌱 Vegetarian day"
-
-                    )
-                  )
-                  , isFamilyLunch && (
-                    _react2.default.createElement('span', { className: "bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full font-medium"     ,}, "👨‍👩‍👦 Family lunch"
-
-                    )
-                  )
-                )
-              )
-
-              , _react2.default.createElement(Section, { title: "Breakfast", icon: _lucidereact.Coffee, subtitle: "Each person, their own start"    ,}
-                , _react2.default.createElement('div', { className: "grid grid-cols-1 md:grid-cols-3 gap-4"   ,}
-                  , (['teen','mom','dad']).map((k, i) => {
+              <Section title="Breakfast" icon={Coffee} subtitle="Each person, their own start">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {(['teen','mom','dad']).map((k, i) => {
                     const r = RECIPES[day.B[i]];
-                    return _react2.default.createElement(PersonMealCard, { key: k, person: FAMILY[k], recipe: r, onClick: () => setSelectedRecipe(r),} );
-                  })
-                )
-              )
+                    return <PersonMealCard key={k} person={FAMILY[k]} recipe={r} onClick={() => setSelectedRecipe(r)} />;
+                  })}
+                </div>
+              </Section>
 
-              , _react2.default.createElement(Section, { title: "Lunch", icon: _lucidereact.Soup, subtitle: isFamilyLunch ? "Whole family" : "Elena only — guys aren't home",}
-                , isFamilyLunch ? (
-                  _react2.default.createElement(FamilyMealCard, { recipe: RECIPES[day.L], onClick: () => setSelectedRecipe(RECIPES[day.L]),} )
+              <Section title="Lunch" icon={Soup} subtitle={isFamilyLunch ? "Whole family" : "Elena only — guys aren't home"}>
+                {isFamilyLunch ? (
+                  <FamilyMealCard recipe={RECIPES[day.L]} onClick={() => setSelectedRecipe(RECIPES[day.L])} />
                 ) : (
-                  _react2.default.createElement('div', { className: "max-w-md",}
-                    , _react2.default.createElement(PersonMealCard, { person: FAMILY.mom, recipe: RECIPES[day.L], onClick: () => setSelectedRecipe(RECIPES[day.L]),} )
-                  )
-                )
-              )
+                  <div className="max-w-md">
+                    <PersonMealCard person={FAMILY.mom} recipe={RECIPES[day.L]} onClick={() => setSelectedRecipe(RECIPES[day.L])} />
+                  </div>
+                )}
+              </Section>
 
-              , _react2.default.createElement(Section, { title: "Dinner", icon: _lucidereact.Utensils, subtitle: isMeatDinner ? "One dish, two proteins" : "Whole family, vegetarian",}
-                , _react2.default.createElement(FamilyMealCard, { recipe: dinnerRecipe, onClick: () => setSelectedRecipe(dinnerRecipe), highlight: true,} )
-              )
-            )
-          )
+              <Section title="Dinner" icon={Utensils} subtitle={isMeatDinner ? "One dish, two proteins" : "Whole family, vegetarian"}>
+                <FamilyMealCard recipe={dinnerRecipe} onClick={() => setSelectedRecipe(dinnerRecipe)} highlight />
+              </Section>
+            </motion.div>
+          )}
 
-          , view === 'shopping' && (
-            _react2.default.createElement(_framermotion.motion.div, { key: "shop", initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 },}
-              , _react2.default.createElement('div', { className: "mb-4",}
-                , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900"  ,}, "Shopping Lists" )
-                , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "Every 2 days • 14 trips total"      )
-              )
-              , _react2.default.createElement('div', { className: "space-y-3",}
-                , Array.from({ length: 14 }).map((_, i) => {
+          {view === 'shopping' && (
+            <motion.div key="shop" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+              <div className="mb-4">
+                <h2 className="text-2xl font-bold text-gray-900">Shopping Lists</h2>
+                <p className="text-sm text-gray-600">Every 2 days • 14 trips total</p>
+              </div>
+              <div className="space-y-3">
+                {Array.from({ length: 14 }).map((_, i) => {
                   const list = getShoppingForTrip(i);
                   const start = getDate(i * 2);
                   const end = getDate(i * 2 + 1);
                   const isCurrent = i === tripIdx;
                   const isOpen = openTrip === i;
                   return (
-                    _react2.default.createElement(_framermotion.motion.div, {
-                      key: i,
-                      layout: true,
-                      className: `bg-white rounded-2xl shadow-sm overflow-hidden border ${isCurrent ? 'border-emerald-400 ring-2 ring-emerald-100' : 'border-gray-100'}`,}
-
-                      , _react2.default.createElement('button', {
-                        onClick: () => setOpenTrip(isOpen ? -1 : i),
-                        className: "w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition"       ,}
-
-                        , _react2.default.createElement('div', { className: "flex items-center gap-3 text-left"   ,}
-                          , _react2.default.createElement('div', { className: `w-10 h-10 rounded-xl flex items-center justify-center ${isCurrent ? 'bg-emerald-500 text-white' : 'bg-amber-100 text-amber-700'}`,}
-                            , _react2.default.createElement(_lucidereact.ShoppingCart, { className: "w-5 h-5" ,} )
-                          )
-                          , _react2.default.createElement('div', null
-                            , _react2.default.createElement('p', { className: "text-xs text-gray-500 font-medium"  ,}, "Trip " , i + 1, " • "  , fmtShort(start), " → "  , fmtShort(end))
-                            , _react2.default.createElement('p', { className: "font-semibold text-gray-900" ,}, list.title)
-                          )
-                          , isCurrent && (
-                            _react2.default.createElement('span', { className: "bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold"      ,}, "Now")
-                          )
-                        )
-                        , _react2.default.createElement(_lucidereact.ChevronRight, { className: `w-5 h-5 text-gray-400 transition-transform ${isOpen ? 'rotate-90' : ''}`,} )
-                      )
-                      , _react2.default.createElement(_framermotion.AnimatePresence, null
-                        , isOpen && (
-                          _react2.default.createElement(_framermotion.motion.div, {
-                            initial: { height: 0, opacity: 0 },
-                            animate: { height: 'auto', opacity: 1 },
-                            exit: { height: 0, opacity: 0 },
-                            className: "overflow-hidden",}
-
-                            , _react2.default.createElement('div', { className: "px-5 pb-5 grid grid-cols-1 md:grid-cols-3 gap-4"     ,}
-                              , _react2.default.createElement(ShoppingCategory, { title: "🥬 Produce" , items: list.produce, tripIdx: i, cat: "p", checked: checked, onToggle: toggleCheck,} )
-                              , _react2.default.createElement(ShoppingCategory, { title: "🥚 Protein & Dairy"   , items: list.protein, tripIdx: i, cat: "d", checked: checked, onToggle: toggleCheck,} )
-                              , _react2.default.createElement(ShoppingCategory, { title: "🌾 Pantry & Spices"   , items: list.pantry, tripIdx: i, cat: "g", checked: checked, onToggle: toggleCheck,} )
-                            )
-                          )
-                        )
-                      )
-                    )
+                    <motion.div
+                      key={i}
+                      layout
+                      className={`bg-white rounded-2xl shadow-sm overflow-hidden border ${isCurrent ? 'border-emerald-400 ring-2 ring-emerald-100' : 'border-gray-100'}`}
+                    >
+                      <button
+                        onClick={() => setOpenTrip(isOpen ? -1 : i)}
+                        className="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition"
+                      >
+                        <div className="flex items-center gap-3 text-left">
+                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isCurrent ? 'bg-emerald-500 text-white' : 'bg-amber-100 text-amber-700'}`}>
+                            <ShoppingCart className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500 font-medium">Trip {i + 1} • {fmtShort(start)} → {fmtShort(end)}</p>
+                            <p className="font-semibold text-gray-900">{list.title}</p>
+                          </div>
+                          {isCurrent && (
+                            <span className="bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold">Now</span>
+                          )}
+                        </div>
+                        <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform ${isOpen ? 'rotate-90' : ''}`} />
+                      </button>
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-5 pb-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <ShoppingCategory title="🥬 Produce" items={list.produce} tripIdx={i} cat="p" checked={checked} onToggle={toggleCheck} />
+                              <ShoppingCategory title="🥚 Protein & Dairy" items={list.protein} tripIdx={i} cat="d" checked={checked} onToggle={toggleCheck} />
+                              <ShoppingCategory title="🌾 Pantry & Spices" items={list.pantry} tripIdx={i} cat="g" checked={checked} onToggle={toggleCheck} />
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
                   );
-                })
-              )
-            )
-          )
+                })}
+              </div>
+            </motion.div>
+          )}
 
-          , view === 'recipes' && (
-            _react2.default.createElement(_framermotion.motion.div, { key: "rec", initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 },}
-              , _react2.default.createElement('div', { className: "mb-5",}
-                , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900"  ,}, "Recipe Library" )
-                , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, Object.keys(RECIPES).length, " recipes" )
-              )
-              , _react2.default.createElement('div', { className: "mb-4 flex flex-col sm:flex-row gap-3"    ,}
-                , _react2.default.createElement('div', { className: "relative flex-1" ,}
-                  , _react2.default.createElement(_lucidereact.Search, { className: "w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"      ,} )
-                  , _react2.default.createElement('input', {
-                    type: "text",
-                    value: search,
-                    onChange: (e) => setSearch(e.target.value),
-                    placeholder: "Search recipes..." ,
-                    className: "w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"           ,}
-                  )
-                )
-                , _react2.default.createElement('div', { className: "flex gap-2 overflow-x-auto"  ,}
-                  , [
+          {view === 'recipes' && (
+            <motion.div key="rec" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+              <div className="mb-5">
+                <h2 className="text-2xl font-bold text-gray-900">Recipe Library</h2>
+                <p className="text-sm text-gray-600">{Object.keys(RECIPES).length} recipes</p>
+              </div>
+              <div className="mb-4 flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                  <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search recipes..."
+                    className="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                  />
+                </div>
+                <div className="flex gap-2 overflow-x-auto">
+                  {[
                     { k: 'all', label: 'All' },
                     { k: 'breakfast', label: '☀️ Breakfast' },
                     { k: 'lunch', label: '🥗 Lunch' },
                     { k: 'dinner', label: '🍽️ Dinner' }
                   ].map(c => (
-                    _react2.default.createElement('button', {
-                      key: c.k,
-                      onClick: () => setRecipeFilter(c.k),
-                      className: `px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition ${
+                    <button
+                      key={c.k}
+                      onClick={() => setRecipeFilter(c.k)}
+                      className={`px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition ${
                         recipeFilter === c.k
                           ? 'bg-emerald-500 text-white shadow'
                           : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-                      }`,}
-
-                      , c.label
-                    )
-                  ))
-                )
-              )
-              , _react2.default.createElement('div', { className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"    ,}
-                , Object.entries(RECIPES)
+                      }`}
+                    >
+                      {c.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {Object.entries(RECIPES)
                   .filter(([id, r]) => {
                     if (search && !r.name.toLowerCase().includes(search.toLowerCase())) return false;
                     if (recipeFilter === 'all') return true;
@@ -640,249 +651,244 @@ function getShoppingForTrip(tripIdx) {
                     return true;
                   })
                   .map(([id, r]) => (
-                    _react2.default.createElement('button', {
-                      key: id,
-                      onClick: () => setSelectedRecipe(r),
-                      className: "bg-white rounded-2xl p-4 text-left shadow-sm hover:shadow-md transition border border-gray-100 hover:border-emerald-200"         ,}
+                    <button
+                      key={id}
+                      onClick={() => setSelectedRecipe(r)}
+                      className="bg-white rounded-2xl p-4 text-left shadow-sm hover:shadow-md transition border border-gray-100 hover:border-emerald-200"
+                    >
+                      <div className="text-3xl mb-2">{r.emoji}</div>
+                      <h3 className="font-semibold text-gray-900 text-sm leading-tight mb-1.5">{r.name}</h3>
+                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <Clock className="w-3 h-3" /> {r.time}m
+                        <Flame className="w-3 h-3 ml-1" /> {r.kcal}
+                      </div>
+                    </button>
+                  ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
 
-                      , _react2.default.createElement('div', { className: "text-3xl mb-2" ,}, r.emoji)
-                      , _react2.default.createElement('h3', { className: "font-semibold text-gray-900 text-sm leading-tight mb-1.5"    ,}, r.name)
-                      , _react2.default.createElement('div', { className: "flex items-center gap-2 text-xs text-gray-500"    ,}
-                        , _react2.default.createElement(_lucidereact.Clock, { className: "w-3 h-3" ,} ), " " , r.time, "m"
-                        , _react2.default.createElement(_lucidereact.Flame, { className: "w-3 h-3 ml-1"  ,} ), " " , r.kcal
-                      )
-                    )
-                  ))
-              )
-            )
-          )
-        )
-      )
-
-      , _react2.default.createElement('nav', { className: "fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-30"        ,}
-        , _react2.default.createElement('div', { className: "max-w-5xl mx-auto grid grid-cols-3"   ,}
-          , [
-            { k: 'today', label: 'Today', Icon: _lucidereact.Calendar },
-            { k: 'shopping', label: 'Shopping', Icon: _lucidereact.ShoppingCart },
-            { k: 'recipes', label: 'Recipes', Icon: _lucidereact.BookOpen }
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-30">
+        <div className="max-w-5xl mx-auto grid grid-cols-3">
+          {[
+            { k: 'today', label: 'Today', Icon: Calendar },
+            { k: 'shopping', label: 'Shopping', Icon: ShoppingCart },
+            { k: 'recipes', label: 'Recipes', Icon: BookOpen }
           ].map(({ k, label, Icon }) => (
-            _react2.default.createElement('button', {
-              key: k,
-              onClick: () => setView(k),
-              className: `flex flex-col items-center gap-1 py-3 transition relative ${
+            <button
+              key={k}
+              onClick={() => setView(k)}
+              className={`flex flex-col items-center gap-1 py-3 transition relative ${
                 view === k ? 'text-emerald-600' : 'text-gray-500 hover:text-gray-800'
-              }`,}
+              }`}
+            >
+              {view === k && (
+                <motion.div
+                  layoutId="navIndicator"
+                  className="absolute top-0 left-1/4 right-1/4 h-1 bg-emerald-500 rounded-b-full"
+                />
+              )}
+              <Icon className="w-5 h-5" />
+              <span className="text-xs font-medium">{label}</span>
+            </button>
+          ))}
+        </div>
+      </nav>
 
-              , view === k && (
-                _react2.default.createElement(_framermotion.motion.div, {
-                  layoutId: "navIndicator",
-                  className: "absolute top-0 left-1/4 right-1/4 h-1 bg-emerald-500 rounded-b-full"      ,}
-                )
-              )
-              , _react2.default.createElement(Icon, { className: "w-5 h-5" ,} )
-              , _react2.default.createElement('span', { className: "text-xs font-medium" ,}, label)
-            )
-          ))
-        )
-      )
-
-      , _react2.default.createElement(_framermotion.AnimatePresence, null
-        , selectedRecipe && (
-          _react2.default.createElement(_framermotion.motion.div, {
-            className: "fixed inset-0 z-50 bg-black/60 flex items-end md:items-center justify-center p-0 md:p-4"         ,
-            initial: { opacity: 0 },
-            animate: { opacity: 1 },
-            exit: { opacity: 0 },
-            onClick: () => setSelectedRecipe(null),}
-
-            , _react2.default.createElement(_framermotion.motion.div, {
-              className: "bg-white rounded-t-3xl md:rounded-3xl w-full max-w-2xl max-h-screen overflow-hidden flex flex-col"        ,
-              initial: { y: 60 },
-              animate: { y: 0 },
-              exit: { y: 60 },
-              onClick: (e) => e.stopPropagation(),}
-
-              , _react2.default.createElement('div', { className: "bg-gradient-to-br from-emerald-500 via-teal-500 to-amber-500 text-white p-6 relative"      ,}
-                , _react2.default.createElement('button', {
-                  onClick: () => setSelectedRecipe(null),
-                  className: "absolute top-4 right-4 bg-white/20 hover:bg-white/30 rounded-full p-1.5"      ,}
-
-                  , _react2.default.createElement(_lucidereact.X, { className: "w-5 h-5" ,} )
-                )
-                , _react2.default.createElement('div', { className: "text-5xl mb-2" ,}, selectedRecipe.emoji)
-                , _react2.default.createElement('h2', { className: "text-2xl font-bold leading-tight pr-8"   ,}, selectedRecipe.name)
-                , _react2.default.createElement('div', { className: "mt-3 flex flex-wrap gap-3 text-sm"    ,}
-                  , _react2.default.createElement('span', { className: "bg-white/20 px-3 py-1 rounded-full flex items-center gap-1.5"      ,}
-                    , _react2.default.createElement(_lucidereact.Clock, { className: "w-3.5 h-3.5" ,} ), " " , selectedRecipe.time, " min"
-                  )
-                  , _react2.default.createElement('span', { className: "bg-white/20 px-3 py-1 rounded-full flex items-center gap-1.5"      ,}
-                    , _react2.default.createElement(_lucidereact.Flame, { className: "w-3.5 h-3.5" ,} ), " " , selectedRecipe.kcal, " kcal"
-                  )
-                  , _react2.default.createElement('span', { className: "bg-white/20 px-3 py-1 rounded-full flex items-center gap-1.5"      ,}, "💪 "
-                     , selectedRecipe.protein, "g protein"
-                  )
-                )
-              )
-              , _react2.default.createElement('div', { className: "overflow-y-auto p-6 space-y-5"  ,}
-                , selectedRecipe.variants && (
-                  _react2.default.createElement('div', { className: "bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-4"      ,}
-                    , _react2.default.createElement('div', { className: "flex-1",}
-                      , _react2.default.createElement('p', { className: "text-xs font-bold text-orange-700 uppercase tracking-wide mb-1"     ,}, "For Jamie & Christian"   )
-                      , _react2.default.createElement('p', { className: "font-semibold text-gray-900" ,}, "🥩 " , selectedRecipe.variants.meat)
-                    )
-                    , _react2.default.createElement('div', { className: "w-px bg-amber-300" ,} )
-                    , _react2.default.createElement('div', { className: "flex-1",}
-                      , _react2.default.createElement('p', { className: "text-xs font-bold text-emerald-700 uppercase tracking-wide mb-1"     ,}, "For Elena" )
-                      , _react2.default.createElement('p', { className: "font-semibold text-gray-900" ,}, "🌱 " , selectedRecipe.variants.veg)
-                    )
-                  )
-                )
-                , _react2.default.createElement('div', null
-                  , _react2.default.createElement('h3', { className: "text-sm font-bold text-gray-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5"        ,}
-                    , _react2.default.createElement(_lucidereact.Sparkles, { className: "w-4 h-4" ,} ), " Ingredients"
-                  )
-                  , _react2.default.createElement('ul', { className: "space-y-1.5",}
-                    , selectedRecipe.ingredients.map((ing, i) => (
-                      _react2.default.createElement('li', { key: i, className: "flex gap-2.5 text-gray-800 text-sm"   ,}
-                        , _react2.default.createElement('span', { className: "text-emerald-500 font-bold" ,}, "•")
-                        , _react2.default.createElement('span', null, ing)
-                      )
-                    ))
-                  )
-                )
-                , _react2.default.createElement('div', null
-                  , _react2.default.createElement('h3', { className: "text-sm font-bold text-gray-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5"        ,}
-                    , _react2.default.createElement(_lucidereact.ChefHat, { className: "w-4 h-4" ,} ), " How to Cook"
-                  )
-                  , _react2.default.createElement('ol', { className: "space-y-2.5",}
-                    , selectedRecipe.steps.map((s, i) => (
-                      _react2.default.createElement('li', { key: i, className: "flex gap-3 text-gray-800 text-sm leading-relaxed"    ,}
-                        , _react2.default.createElement('span', { className: "flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs"          ,}, i + 1)
-                        , _react2.default.createElement('span', { className: "pt-0.5",}, s)
-                      )
-                    ))
-                  )
-                )
-                , selectedRecipe.tip && (
-                  _react2.default.createElement('div', { className: "bg-emerald-50 border-l-4 border-emerald-400 rounded-r-xl p-3.5 text-sm text-emerald-900"      ,}
-                    , _react2.default.createElement('span', { className: "font-bold",}, "Tip:"), " " , selectedRecipe.tip
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
+      <AnimatePresence>
+        {selectedRecipe && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/60 flex items-end md:items-center justify-center p-0 md:p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedRecipe(null)}
+          >
+            <motion.div
+              className="bg-white rounded-t-3xl md:rounded-3xl w-full max-w-2xl max-h-screen overflow-hidden flex flex-col"
+              initial={{ y: 60 }}
+              animate={{ y: 0 }}
+              exit={{ y: 60 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="bg-gradient-to-br from-emerald-500 via-teal-500 to-amber-500 text-white p-6 relative">
+                <button
+                  onClick={() => setSelectedRecipe(null)}
+                  className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 rounded-full p-1.5"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                <div className="text-5xl mb-2">{selectedRecipe.emoji}</div>
+                <h2 className="text-2xl font-bold leading-tight pr-8">{selectedRecipe.name}</h2>
+                <div className="mt-3 flex flex-wrap gap-3 text-sm">
+                  <span className="bg-white/20 px-3 py-1 rounded-full flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5" /> {selectedRecipe.time} min
+                  </span>
+                  <span className="bg-white/20 px-3 py-1 rounded-full flex items-center gap-1.5">
+                    <Flame className="w-3.5 h-3.5" /> {selectedRecipe.kcal} kcal
+                  </span>
+                  <span className="bg-white/20 px-3 py-1 rounded-full flex items-center gap-1.5">
+                    💪 {selectedRecipe.protein}g protein
+                  </span>
+                </div>
+              </div>
+              <div className="overflow-y-auto p-6 space-y-5">
+                {selectedRecipe.variants && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-4">
+                    <div className="flex-1">
+                      <p className="text-xs font-bold text-orange-700 uppercase tracking-wide mb-1">For Jamie & Christian</p>
+                      <p className="font-semibold text-gray-900">🥩 {selectedRecipe.variants.meat}</p>
+                    </div>
+                    <div className="w-px bg-amber-300" />
+                    <div className="flex-1">
+                      <p className="text-xs font-bold text-emerald-700 uppercase tracking-wide mb-1">For Elena</p>
+                      <p className="font-semibold text-gray-900">🌱 {selectedRecipe.variants.veg}</p>
+                    </div>
+                  </div>
+                )}
+                <div>
+                  <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4" /> Ingredients
+                  </h3>
+                  <ul className="space-y-1.5">
+                    {selectedRecipe.ingredients.map((ing, i) => (
+                      <li key={i} className="flex gap-2.5 text-gray-800 text-sm">
+                        <span className="text-emerald-500 font-bold">•</span>
+                        <span>{ing}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                    <ChefHat className="w-4 h-4" /> How to Cook
+                  </h3>
+                  <ol className="space-y-2.5">
+                    {selectedRecipe.steps.map((s, i) => (
+                      <li key={i} className="flex gap-3 text-gray-800 text-sm leading-relaxed">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">{i + 1}</span>
+                        <span className="pt-0.5">{s}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+                {selectedRecipe.tip && (
+                  <div className="bg-emerald-50 border-l-4 border-emerald-400 rounded-r-xl p-3.5 text-sm text-emerald-900">
+                    <span className="font-bold">Tip:</span> {selectedRecipe.tip}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
-} exports.default = MealPlanApp;
+}
 
 function Section({ title, icon: Icon, subtitle, children }) {
   return (
-    _react2.default.createElement('section', { className: "mb-7",}
-      , _react2.default.createElement('div', { className: "flex items-center gap-2 mb-3"   ,}
-        , _react2.default.createElement('div', { className: "w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center"         ,}
-          , _react2.default.createElement(Icon, { className: "w-4 h-4" ,} )
-        )
-        , _react2.default.createElement('div', null
-          , _react2.default.createElement('h3', { className: "font-bold text-gray-900 leading-tight"  ,}, title)
-          , _react2.default.createElement('p', { className: "text-xs text-gray-500" ,}, subtitle)
-        )
-      )
-      , children
-    )
+    <section className="mb-7">
+      <div className="flex items-center gap-2 mb-3">
+        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center">
+          <Icon className="w-4 h-4" />
+        </div>
+        <div>
+          <h3 className="font-bold text-gray-900 leading-tight">{title}</h3>
+          <p className="text-xs text-gray-500">{subtitle}</p>
+        </div>
+      </div>
+      {children}
+    </section>
   );
 }
 
 function PersonMealCard({ person, recipe, onClick }) {
   const Icon = person.icon;
   return (
-    _react2.default.createElement('button', {
-      onClick: onClick,
-      className: `text-left bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition border ${person.border} hover:scale-[1.01] w-full`,}
-
-      , _react2.default.createElement('div', { className: "flex items-center gap-2 mb-3"   ,}
-        , _react2.default.createElement('div', { className: `w-7 h-7 rounded-lg ${person.accent} text-white flex items-center justify-center`,}
-          , _react2.default.createElement(Icon, { className: "w-4 h-4" ,} )
-        )
-        , _react2.default.createElement('span', { className: `text-xs font-bold uppercase tracking-wider ${person.text}`,}, person.name)
-      )
-      , _react2.default.createElement('div', { className: "flex items-start gap-2.5"  ,}
-        , _react2.default.createElement('div', { className: "text-3xl",}, recipe.emoji)
-        , _react2.default.createElement('div', { className: "flex-1 min-w-0" ,}
-          , _react2.default.createElement('p', { className: "font-semibold text-gray-900 text-sm leading-tight"   ,}, recipe.name)
-          , _react2.default.createElement('div', { className: "flex items-center gap-3 text-xs text-gray-500 mt-1.5"     ,}
-            , _react2.default.createElement('span', { className: "flex items-center gap-1"  ,}, _react2.default.createElement(_lucidereact.Clock, { className: "w-3 h-3" ,} ), recipe.time, "m")
-            , _react2.default.createElement('span', { className: "flex items-center gap-1"  ,}, _react2.default.createElement(_lucidereact.Flame, { className: "w-3 h-3" ,} ), recipe.kcal)
-            , _react2.default.createElement('span', null, recipe.protein, "g 💪" )
-          )
-        )
-      )
-    )
+    <button
+      onClick={onClick}
+      className={`text-left bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition border ${person.border} hover:scale-[1.01] w-full`}
+    >
+      <div className="flex items-center gap-2 mb-3">
+        <div className={`w-7 h-7 rounded-lg ${person.accent} text-white flex items-center justify-center`}>
+          <Icon className="w-4 h-4" />
+        </div>
+        <span className={`text-xs font-bold uppercase tracking-wider ${person.text}`}>{person.name}</span>
+      </div>
+      <div className="flex items-start gap-2.5">
+        <div className="text-3xl">{recipe.emoji}</div>
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-gray-900 text-sm leading-tight">{recipe.name}</p>
+          <div className="flex items-center gap-3 text-xs text-gray-500 mt-1.5">
+            <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{recipe.time}m</span>
+            <span className="flex items-center gap-1"><Flame className="w-3 h-3" />{recipe.kcal}</span>
+            <span>{recipe.protein}g 💪</span>
+          </div>
+        </div>
+      </div>
+    </button>
   );
 }
 
 function FamilyMealCard({ recipe, onClick, highlight }) {
   return (
-    _react2.default.createElement('button', {
-      onClick: onClick,
-      className: `text-left bg-white rounded-2xl p-5 shadow-sm hover:shadow-lg transition w-full border-2 ${
+    <button
+      onClick={onClick}
+      className={`text-left bg-white rounded-2xl p-5 shadow-sm hover:shadow-lg transition w-full border-2 ${
         highlight ? 'border-amber-200 bg-gradient-to-br from-white to-amber-50' : 'border-gray-100'
-      } hover:scale-[1.005]`,}
-
-      , _react2.default.createElement('div', { className: "flex items-center gap-4"  ,}
-        , _react2.default.createElement('div', { className: "text-5xl flex-shrink-0" ,}, recipe.emoji)
-        , _react2.default.createElement('div', { className: "flex-1 min-w-0" ,}
-          , _react2.default.createElement('p', { className: "font-bold text-gray-900 text-base md:text-lg leading-tight"    ,}, recipe.name)
-          , recipe.variants && (
-            _react2.default.createElement('p', { className: "text-xs text-gray-600 mt-1"  ,}
-              , _react2.default.createElement('span', { className: "font-semibold text-orange-700" ,}, recipe.variants.meat)
-              , _react2.default.createElement('span', { className: "mx-1.5 text-gray-400" ,}, "/")
-              , _react2.default.createElement('span', { className: "font-semibold text-emerald-700" ,}, recipe.variants.veg)
-            )
-          )
-          , _react2.default.createElement('div', { className: "flex items-center gap-3 text-xs text-gray-500 mt-2"     ,}
-            , _react2.default.createElement('span', { className: "flex items-center gap-1"  ,}, _react2.default.createElement(_lucidereact.Clock, { className: "w-3 h-3" ,} ), recipe.time, " min" )
-            , _react2.default.createElement('span', { className: "flex items-center gap-1"  ,}, _react2.default.createElement(_lucidereact.Flame, { className: "w-3 h-3" ,} ), recipe.kcal, " kcal" )
-            , _react2.default.createElement('span', null, recipe.protein, "g protein" )
-          )
-          , _react2.default.createElement('p', { className: "mt-2 text-xs text-emerald-700 font-medium"   ,}, "Tap for full recipe →"    )
-        )
-      )
-    )
+      } hover:scale-[1.005]`}
+    >
+      <div className="flex items-center gap-4">
+        <div className="text-5xl flex-shrink-0">{recipe.emoji}</div>
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-gray-900 text-base md:text-lg leading-tight">{recipe.name}</p>
+          {recipe.variants && (
+            <p className="text-xs text-gray-600 mt-1">
+              <span className="font-semibold text-orange-700">{recipe.variants.meat}</span>
+              <span className="mx-1.5 text-gray-400">/</span>
+              <span className="font-semibold text-emerald-700">{recipe.variants.veg}</span>
+            </p>
+          )}
+          <div className="flex items-center gap-3 text-xs text-gray-500 mt-2">
+            <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{recipe.time} min</span>
+            <span className="flex items-center gap-1"><Flame className="w-3 h-3" />{recipe.kcal} kcal</span>
+            <span>{recipe.protein}g protein</span>
+          </div>
+          <p className="mt-2 text-xs text-emerald-700 font-medium">Tap for full recipe →</p>
+        </div>
+      </div>
+    </button>
   );
 }
 
 function ShoppingCategory({ title, items, tripIdx, cat, checked, onToggle }) {
   return (
-    _react2.default.createElement('div', null
-      , _react2.default.createElement('h4', { className: "font-bold text-gray-700 text-sm mb-2"   ,}, title)
-      , _react2.default.createElement('ul', { className: "space-y-1.5",}
-        , items.map((item, i) => {
+    <div>
+      <h4 className="font-bold text-gray-700 text-sm mb-2">{title}</h4>
+      <ul className="space-y-1.5">
+        {items.map((item, i) => {
           const key = `${tripIdx}-${cat}-${i}`;
           const isChecked = checked[key];
           return (
-            _react2.default.createElement('li', { key: i,}
-              , _react2.default.createElement('button', {
-                onClick: () => onToggle(key),
-                className: "flex items-start gap-2 w-full text-left text-sm group"      ,}
-
-                , _react2.default.createElement('span', { className: `flex-shrink-0 w-5 h-5 mt-0.5 rounded-md border-2 flex items-center justify-center transition ${
+            <li key={i}>
+              <button
+                onClick={() => onToggle(key)}
+                className="flex items-start gap-2 w-full text-left text-sm group"
+              >
+                <span className={`flex-shrink-0 w-5 h-5 mt-0.5 rounded-md border-2 flex items-center justify-center transition ${
                   isChecked ? 'bg-emerald-500 border-emerald-500' : 'border-gray-300 group-hover:border-emerald-400'
-                }`,}
-                  , isChecked && _react2.default.createElement(_lucidereact.Check, { className: "w-3 h-3 text-white"  ,} )
-                )
-                , _react2.default.createElement('span', { className: `${isChecked ? 'line-through text-gray-400' : 'text-gray-800'}`,}, item)
-              )
-            )
+                }`}>
+                  {isChecked && <Check className="w-3 h-3 text-white" />}
+                </span>
+                <span className={`${isChecked ? 'line-through text-gray-400' : 'text-gray-800'}`}>{item}</span>
+              </button>
+            </li>
           );
-        })
-      )
-    )
+        })}
+      </ul>
+    </div>
   );
 }
-</script></head>
-  <body>
-  
-
-<div id="preview-app"></div></body></html>
