@@ -1,0 +1,888 @@
+<!DOCTYPE html><html><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"><meta http-equiv="x-dns-prefetch-control" content="off"><script src="https://puc.poecdn.net/authenticated_preview_page/standard.3ef2c256959faf5a756d.js"></script>
+    <meta charset="utf-8">
+    <title>Poe</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://puc.poecdn.net/authenticated_preview_page/disableWebRTC.9710cebe07429a9e8e06.js"></script><meta name="x-poe-allow-downloads" content="true"><meta name="x-poe-datastore-behavior" content="disabled"><script src="https://puc.poecdn.net/authenticated_preview_page/tw.50ec1b0612bf5b0c30a5.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/deps.faccd16000d314dc16d5.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/exports.b0f0f482cdeb5302b0b9.js"></script><script src="https://puc.poecdn.net/authenticated_preview_page/renderer.75c73ae6b4235f62945a.js"></script><script>Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _framermotion = require('framer-motion');
+
+
+
+
+var _lucidereact = require('lucide-react');
+
+// ============== FAMILY ==============
+const FAMILY = {
+  teen: { name: 'Jamie', age: 17, icon: _lucidereact.Dumbbell, accent: 'bg-blue-500',
+    text: 'text-blue-700', light: 'bg-blue-50', border: 'border-blue-200',
+    ring: 'ring-blue-300', goal: 'Build Muscle' },
+  mom:  { name: 'Elena', age: 50, icon: _lucidereact.Leaf, accent: 'bg-emerald-500',
+    text: 'text-emerald-700', light: 'bg-emerald-50', border: 'border-emerald-200',
+    ring: 'ring-emerald-300', goal: 'Burn Visceral Fat • Vegetarian' },
+  dad:  { name: 'Christian', age: 53, icon: _lucidereact.Target, accent: 'bg-orange-500',
+    text: 'text-orange-700', light: 'bg-orange-50', border: 'border-orange-200',
+    ring: 'ring-orange-300', goal: 'Lean & Strong' }
+};
+
+// ============== RECIPES ==============
+const RECIPES = {
+  // ---- Teen smoothies ----
+  s_berry: { name: 'Berry Protein Power', emoji: '🍓', time: 5, kcal: 480, protein: 35,
+    ingredients: ['1 cup frozen mixed berries','1 banana','1 scoop vanilla whey','½ cup rolled oats','1 cup almond milk','1 tbsp peanut butter','1 tsp honey'],
+    steps: ['Add everything to blender.','Blend 60 sec until smooth.','Pour into a tall glass.'],
+    tip: 'Post-workout fuel.' },
+  s_green: { name: 'Green Muscle Smoothie', emoji: '🥬', time: 5, kcal: 460, protein: 38,
+    ingredients: ['1 large handful spinach','1 banana','½ cup mango chunks','1 scoop vanilla protein','½ cup Greek yogurt','1 cup almond milk','1 tbsp chia'],
+    steps: ['Blend spinach + milk first.','Add the rest, blend 45 sec.','Serve cold.'],
+    tip: 'Iron + protein boost.' },
+  s_choco: { name: 'Chocolate Banana Builder', emoji: '🍫', time: 5, kcal: 510, protein: 40,
+    ingredients: ['2 bananas','1 tbsp cocoa powder','½ cup oats','1 scoop chocolate protein','1 tbsp almond butter','1 cup milk','Pinch cinnamon','4 ice cubes'],
+    steps: ['Add all to blender.','Blend until thick & creamy.','Optional: top with cocoa nibs.'],
+    tip: 'Tastes like dessert.' },
+  s_tropical: { name: 'Tropical Boost', emoji: '🥭', time: 5, kcal: 470, protein: 32,
+    ingredients: ['½ cup pineapple','½ cup mango','1 banana','1 scoop vanilla protein','1 cup light coconut milk','1 tbsp chia','½ tsp ground ginger'],
+    steps: ['Blend everything 60 sec.','Pour and enjoy.'],
+    tip: 'Anti-inflammatory ginger kick.' },
+  s_pbj: { name: 'PB&J Smoothie', emoji: '🥜', time: 5, kcal: 500, protein: 36,
+    ingredients: ['1 cup frozen strawberries','1 banana','2 tbsp peanut butter','½ cup oats','1 scoop vanilla protein','1 cup milk','1 tsp honey'],
+    steps: ['Combine in blender.','Blend until smooth.','Serve.'],
+    tip: 'Childhood flavor, adult gains.' },
+  s_mocha: { name: 'Mocha Power Shake', emoji: '☕', time: 5, kcal: 490, protein: 38,
+    ingredients: ['1 banana','1 shot cooled espresso (or ½ cup strong coffee)','1 tbsp cocoa','½ cup oats','1 scoop chocolate protein','1 tbsp almond butter','1 cup almond milk'],
+    steps: ['Blend until smooth.','Dust with cinnamon.'],
+    tip: 'Caffeine + carbs + protein.' },
+  s_oat: { name: 'Mixed Berry Oat Smoothie', emoji: '🫐', time: 5, kcal: 475, protein: 35,
+    ingredients: ['1 cup mixed berries','½ cup oats','1 tbsp almond butter','1 scoop vanilla protein','1 cup milk','1 tsp vanilla','1 tsp maple syrup'],
+    steps: ['Blend until smooth.','Adjust thickness with extra milk.'],
+    tip: 'Fiber-rich and filling.' },
+
+  // ---- Elena breakfasts ----
+  m_yogurt: { name: 'Greek Yogurt Power Bowl', emoji: '🥣', time: 5, kcal: 280, protein: 22,
+    ingredients: ['¾ cup 0% Greek yogurt','1 tbsp chia seeds','½ cup mixed berries','8 raw almonds','1 tsp honey','Cinnamon dust'],
+    steps: ['Spoon yogurt into bowl.','Top with chia, berries, almonds.','Drizzle honey, dust with cinnamon.'],
+    tip: 'Probiotics + protein.' },
+  m_scramble: { name: 'Mediterranean Veggie Scramble', emoji: '🍳', time: 10, kcal: 290, protein: 21,
+    ingredients: ['2 large eggs','Handful spinach','4 cherry tomatoes (halved)','1 tbsp crumbled feta','½ tsp dried oregano','Black pepper','1 tsp olive oil'],
+    steps: ['Heat oil in non-stick pan.','Sauté spinach + tomato 1 min.','Add beaten eggs with oregano.','Scramble gently, finish with feta + pepper.'],
+    tip: 'Warm and savory.' },
+  m_cottage: { name: 'Cottage Cheese Cucumber Bowl', emoji: '🥒', time: 5, kcal: 260, protein: 24,
+    ingredients: ['¾ cup low-fat cottage cheese','½ cucumber (diced)','6 walnut halves','1 tsp fresh dill','Cracked pepper','Drizzle olive oil','Squeeze lemon'],
+    steps: ['Spoon cottage cheese.','Top with cucumber, walnuts, dill.','Drizzle oil + lemon, season.'],
+    tip: 'Cooling and savory.' },
+  m_avo: { name: 'Avocado Toast with Poached Egg', emoji: '🥑', time: 10, kcal: 320, protein: 18,
+    ingredients: ['1 slice whole grain bread','½ avocado','1 large egg','Pinch chili flakes','Squeeze lemon','Salt + pepper','½ tsp everything seasoning'],
+    steps: ['Toast bread.','Mash avocado with lemon, salt, pepper.','Poach egg 3 min.','Spread avocado, top with egg + seasoning.'],
+    tip: 'Healthy fats + clean protein.' },
+  m_tofu: { name: 'Turmeric Tofu Scramble', emoji: '✨', time: 12, kcal: 280, protein: 22,
+    ingredients: ['½ block firm tofu (crumbled)','½ tsp turmeric','¼ tsp cumin','Handful spinach','4 cherry tomatoes','1 tsp olive oil','1 tbsp nutritional yeast','Salt + pepper'],
+    steps: ['Sauté tofu in oil with turmeric + cumin 4 min.','Add tomatoes + spinach 2 min.','Stir in nutritional yeast, season.'],
+    tip: 'Anti-inflammatory protein.' },
+  m_oats: { name: 'Protein Overnight Oats', emoji: '🌾', time: 5, kcal: 310, protein: 24,
+    ingredients: ['½ cup rolled oats','½ scoop vanilla protein','¾ cup unsweetened almond milk','1 tbsp chia','½ cup berries','1 tsp almond butter'],
+    steps: ['Mix oats, protein, milk, chia in jar the night before.','Refrigerate overnight.','Top with berries and almond butter in morning.'],
+    tip: 'Prep ahead — grab and go.' },
+  m_omelet: { name: 'Mushroom Herb Egg-White Omelet', emoji: '🍄', time: 10, kcal: 240, protein: 26,
+    ingredients: ['4 egg whites + 1 whole egg','½ cup sliced mushrooms','1 tbsp fresh chives','1 tsp olive oil','1 tbsp grated parmesan','Salt + pepper'],
+    steps: ['Sauté mushrooms in oil 3 min.','Pour in beaten eggs.','When almost set, add chives + parmesan, fold.'],
+    tip: 'High protein, low cal.' },
+
+  // ---- Christian breakfasts (very light) ----
+  d_egg: { name: 'Boiled Egg & Apple', emoji: '🥚', time: 8, kcal: 180, protein: 7,
+    ingredients: ['1 large egg','1 small apple','Black coffee or green tea','Pinch sea salt'],
+    steps: ['Boil egg 7 min.','Slice apple.','Sprinkle salt on egg.','Enjoy with coffee.'],
+    tip: 'Light, clean fuel.' },
+  d_yogurt: { name: 'Greek Yogurt with Walnuts', emoji: '🥄', time: 3, kcal: 200, protein: 14,
+    ingredients: ['½ cup 0% Greek yogurt','4 walnut halves','½ tsp honey','Pinch cinnamon'],
+    steps: ['Spoon yogurt into bowl.','Top with walnuts, honey, cinnamon.'],
+    tip: 'Quick and satisfying.' },
+  d_cottage: { name: 'Cottage Cheese & Berries', emoji: '🫐', time: 3, kcal: 180, protein: 16,
+    ingredients: ['½ cup low-fat cottage cheese','½ cup blueberries','1 tsp pumpkin seeds','Pinch black pepper'],
+    steps: ['Combine in bowl.','Sprinkle seeds + pepper.'],
+    tip: 'Slow-release casein.' },
+  d_toast: { name: 'Almond Butter Toast', emoji: '🍞', time: 5, kcal: 220, protein: 9,
+    ingredients: ['1 slice whole grain bread','1 tbsp almond butter','½ banana sliced','Pinch cinnamon'],
+    steps: ['Toast bread.','Spread almond butter.','Top with banana + cinnamon.'],
+    tip: 'Clean carbs + healthy fats.' },
+  d_smoothie: { name: 'Light Protein Smoothie', emoji: '🥤', time: 5, kcal: 220, protein: 22,
+    ingredients: ['½ cup berries','½ banana','1 scoop whey','1 cup unsweetened almond milk','Few ice cubes'],
+    steps: ['Blend 60 sec.','Serve immediately.'],
+    tip: 'Fast and protein-packed.' },
+  d_eggs2: { name: '2 Boiled Eggs & Cucumber', emoji: '🥒', time: 8, kcal: 180, protein: 13,
+    ingredients: ['2 large eggs','½ cucumber sliced','Pinch chili flakes','Salt'],
+    steps: ['Boil eggs 7 min.','Slice cucumber.','Season eggs with salt + chili.'],
+    tip: 'Mediterranean style.' },
+  d_banana: { name: 'Banana & Almonds', emoji: '🍌', time: 2, kcal: 200, protein: 6,
+    ingredients: ['1 banana','12 raw almonds','Green tea or black coffee'],
+    steps: ['Peel banana.','Eat with handful of almonds + tea.'],
+    tip: 'Simplest start for busy days.' },
+
+  // ---- Elena weekday lunches ----
+  l_chickpea: { name: 'Mediterranean Chickpea Salad', emoji: '🥗', time: 10, kcal: 420, protein: 18,
+    ingredients: ['1 can chickpeas drained','½ cucumber diced','1 cup cherry tomatoes halved','¼ red onion diced','¼ cup feta','8 kalamata olives','2 tbsp olive oil','1 tbsp lemon juice','1 tsp oregano','Fresh parsley'],
+    steps: ['Combine veg, chickpeas, olives in bowl.','Whisk oil, lemon, oregano, salt, pepper.','Toss + top with feta and parsley.'],
+    tip: 'Make double for tomorrow.' },
+  l_lentil: { name: 'Hearty Lentil Soup', emoji: '🍲', time: 25, kcal: 380, protein: 20,
+    ingredients: ['1 cup red lentils','1 onion diced','2 carrots diced','2 garlic cloves','1 tsp cumin','1 tsp smoked paprika','½ tsp turmeric','4 cups veg broth','1 can diced tomatoes','1 tbsp olive oil','Lemon wedges'],
+    steps: ['Sauté onion, carrot, garlic in oil 5 min.','Add spices, cook 30 sec.','Add lentils, tomatoes, broth.','Simmer 18-20 min.','Squeeze lemon, season, blend half if you like creamy.'],
+    tip: 'Freezes beautifully.' },
+  l_buddha: { name: 'Quinoa Buddha Bowl', emoji: '🍱', time: 15, kcal: 450, protein: 18,
+    ingredients: ['¾ cup cooked quinoa','½ cup roasted chickpeas','1 cup baby spinach','½ avocado','½ cup roasted sweet potato','2 tbsp tahini','1 tbsp lemon juice','1 tsp maple syrup','Pumpkin seeds'],
+    steps: ['Arrange quinoa, spinach, chickpeas, sweet potato, avocado in bowl.','Whisk tahini with lemon, maple, water.','Drizzle dressing, top with seeds.'],
+    tip: 'Use leftover roasted veg.' },
+  l_tofu: { name: 'Ginger Tofu Stir-Fry', emoji: '🥢', time: 15, kcal: 400, protein: 22,
+    ingredients: ['½ block firm tofu cubed','2 cups stir-fry veg (broccoli, peppers, snap peas)','2 garlic cloves','1 inch ginger grated','2 tbsp soy sauce','1 tsp sesame oil','1 tsp rice vinegar','½ cup cooked brown rice','Sesame seeds'],
+    steps: ['Pan-fry tofu in oil until golden, set aside.','Stir-fry veg with ginger + garlic 4 min.','Return tofu, add soy, vinegar, sesame oil.','Serve over rice with seeds.'],
+    tip: 'Pat tofu dry for max crisp.' },
+  l_caprese: { name: 'White Bean Caprese Bowl', emoji: '🍅', time: 8, kcal: 410, protein: 19,
+    ingredients: ['1 can cannellini beans','1 cup cherry tomatoes','¼ cup fresh mozzarella balls','Fresh basil','1 tbsp balsamic glaze','2 tbsp olive oil','Salt + pepper','1 garlic clove minced'],
+    steps: ['Combine beans, tomatoes, mozzarella in bowl.','Drizzle olive oil + balsamic.','Tear basil over, season.'],
+    tip: 'Sweet, savory, satisfying.' },
+  l_wrap: { name: 'Black Bean Avocado Wrap', emoji: '🌯', time: 10, kcal: 440, protein: 17,
+    ingredients: ['1 large whole grain tortilla','½ cup black beans mashed','½ avocado sliced','¼ cup corn','2 tbsp salsa','1 tbsp Greek yogurt','½ tsp cumin','Handful spinach','Lime'],
+    steps: ['Mash beans with cumin + lime.','Spread on tortilla.','Layer avocado, corn, spinach, salsa, yogurt.','Roll tightly, slice.'],
+    tip: 'Perfect grab-and-go.' },
+  l_curry: { name: 'Chickpea Spinach Curry', emoji: '🍛', time: 20, kcal: 430, protein: 18,
+    ingredients: ['1 can chickpeas','1 onion diced','2 garlic cloves','1 inch ginger','1 can diced tomatoes','1 tsp garam masala','1 tsp cumin','½ tsp turmeric','½ tsp chili powder','1 cup spinach','½ cup coconut milk','1 tbsp olive oil','Cilantro'],
+    steps: ['Sauté onion 4 min.','Add garlic, ginger, spices 1 min.','Add tomatoes, simmer 5 min.','Add chickpeas + coconut milk, simmer 8 min.','Stir in spinach + cilantro.'],
+    tip: 'Rich and warming.' },
+
+  // ---- Weekend lunches (all 3) ----
+  w_mezze: { name: 'Mediterranean Mezze Platter', emoji: '🫒', time: 20, kcal: 520, protein: 24,
+    ingredients: ['1 cup hummus','8 falafel (frozen, baked)','1 cucumber sliced','1 cup cherry tomatoes','4 whole wheat pitas','¼ cup olives','Tabbouleh: 1 cup parsley, ½ cup mint, 1 tomato, ¼ cup bulgur, lemon, olive oil','½ cup tzatziki','Lemon wedges'],
+    steps: ['Bake falafel per package (425°F, 15 min).','Cook bulgur, mix with chopped parsley, mint, tomato, lemon, oil.','Arrange everything on a big platter.','Warm pitas briefly in oven.'],
+    tip: 'Family-style, share & dip.' },
+  w_grain: { name: 'Greek Grain Bowl with Halloumi & Chicken', emoji: '🥙', time: 25, kcal: 580, protein: 38,
+    ingredients: ['2 cups cooked farro or quinoa','2 chicken breasts (men)','1 block halloumi sliced (Elena)','2 cups arugula','1 cucumber','1 cup cherry tomatoes','½ red onion','⅓ cup feta','¼ cup olives','Dressing: 4 tbsp olive oil + 2 tbsp lemon + 1 tbsp red wine vinegar + 1 tsp oregano + 1 garlic clove'],
+    steps: ['Season chicken with oregano, salt, pepper. Grill or pan-sear 6 min/side.','Pan-fry halloumi 2 min/side until golden.','Toss farro with arugula, cucumber, tomato, onion, feta, olives.','Whisk dressing, toss with salad.','Slice protein on top of each plate.'],
+    tip: 'Two proteins, one big bowl.',
+    variants: { meat: 'Chicken breast', veg: 'Halloumi' } },
+
+  // ---- Meat dinners with veg variant ----
+  dn_moroccan: { name: 'Moroccan Chicken / Chickpeas + Roasted Veg', emoji: '🌶️', time: 35, kcal: 550, protein: 42,
+    ingredients: [
+      'For all: 2 zucchini chunks, 1 red onion, 1 red bell pepper, 1 cup cauliflower florets, 2 tbsp olive oil',
+      'Spice rub: 1 tsp cumin + 1 tsp paprika + 1 tsp coriander + ½ tsp cinnamon + ½ tsp turmeric + ¼ tsp cayenne, salt, pepper',
+      'For men: 3 chicken thighs (boneless)',
+      'For Elena: 1 can chickpeas drained',
+      'To serve: ½ cup couscous, lemon wedges, cilantro, ¼ cup Greek yogurt'],
+    steps: [
+      'Preheat oven 425°F (220°C).',
+      'Mix spices. Rub half on chicken; toss other half with chickpeas + drizzle of oil.',
+      'Toss veg with oil, salt, pepper. Spread on baking sheet with chicken on one side.',
+      'Roast 25 min total. Add chickpeas to their corner for the last 12 min.',
+      'Cook couscous (just-add-water 5 min).',
+      'Serve over couscous with yogurt, lemon, cilantro.'],
+    tip: 'One tray, two proteins.',
+    variants: { meat: 'Chicken thighs', veg: 'Spiced chickpeas' } },
+  dn_stirfry: { name: 'Beef / Tofu Broccoli Stir-Fry', emoji: '🥦', time: 25, kcal: 540, protein: 40,
+    ingredients: [
+      'For all: 4 cups broccoli florets, 1 red bell pepper sliced, 3 garlic cloves, 1 inch ginger, 2 spring onions',
+      'Sauce: 4 tbsp soy + 1 tbsp rice vinegar + 1 tbsp honey + 1 tsp sesame oil + 1 tsp cornstarch + ½ cup water',
+      'For men: 12 oz beef sirloin sliced thin',
+      'For Elena: 1 block extra-firm tofu cubed',
+      '1 cup cooked brown rice, sesame seeds, chili flakes'],
+    steps: [
+      'Cook brown rice. Whisk sauce.',
+      'Press tofu, cube, pan-fry in 1 tbsp oil until golden — set aside.',
+      'Sear beef in batches 1-2 min — set aside.',
+      'Stir-fry garlic + ginger 30 sec. Add broccoli + pepper, cook 4 min.',
+      'Pour sauce in, simmer until glossy. Return beef to one side, tofu to other (or split into 2 pans).',
+      'Serve over rice with sesame, spring onion, chili.'],
+    tip: 'Quick + customizable.',
+    variants: { meat: 'Beef sirloin', veg: 'Crispy tofu' } },
+  dn_lemon: { name: 'Lemon Herb Chicken / Halloumi + Quinoa', emoji: '🍋', time: 30, kcal: 530, protein: 42,
+    ingredients: [
+      'For all: 1 cup quinoa, 2 cups asparagus, 1 cup cherry tomatoes, 1 zucchini',
+      'Marinade: ¼ cup olive oil + 3 tbsp lemon + 2 garlic cloves + 1 tsp oregano + 1 tsp thyme, salt, pepper',
+      'For men: 2 chicken breasts butterflied',
+      'For Elena: 1 block halloumi sliced',
+      'Parsley, lemon zest, ¼ cup toasted pine nuts'],
+    steps: [
+      'Marinate chicken 15 min, halloumi 5 min.',
+      'Cook quinoa.',
+      'Sear chicken in grill pan 5 min/side. Sear halloumi 2 min/side.',
+      'Toss veg with oil, salt, pepper — sauté 6 min or roast 425°F for 12 min.',
+      'Plate protein over quinoa with veg, parsley, pine nuts, zest.'],
+    tip: 'Bright Mediterranean vibes.',
+    variants: { meat: 'Chicken breast', veg: 'Halloumi' } },
+  dn_tacos: { name: 'Beef / Black Bean Tacos', emoji: '🌮', time: 25, kcal: 580, protein: 38,
+    ingredients: [
+      'For all: 8 corn tortillas, 1 onion diced, 3 garlic cloves, 2 cups shredded lettuce, 1 cup salsa, 1 avocado, lime, cilantro, ½ cup Greek yogurt',
+      'Spice mix: 1 tbsp cumin + 1 tbsp chili powder + 1 tsp smoked paprika + 1 tsp oregano + ½ tsp coriander + salt',
+      'For men: 1 lb lean ground beef',
+      'For Elena: 1 can black beans + ½ cup corn'],
+    steps: [
+      'Sauté onion in 2 pans 4 min.',
+      'Pan 1 (men): Add beef, brown 6 min, add half spice mix + ¼ cup water, simmer 4 min.',
+      'Pan 2 (Elena): Add black beans + corn + other half of spice mix + 2 tbsp water, simmer 5 min, mash slightly.',
+      'Warm tortillas in dry skillet.',
+      'Build: protein, lettuce, salsa, avocado, yogurt, cilantro, lime.'],
+    tip: 'Family taco night.',
+    variants: { meat: 'Spiced ground beef', veg: 'Smoky black beans' } },
+  dn_tandoori: { name: 'Tandoori Chicken / Paneer + Cauli Rice', emoji: '🇮🇳', time: 35, kcal: 510, protein: 44,
+    ingredients: [
+      'Marinade: 1 cup Greek yogurt + 2 tbsp lemon + 2 garlic cloves + 1 inch ginger + 2 tsp garam masala + 1 tsp turmeric + 1 tsp paprika + 1 tsp cumin + ½ tsp cayenne + 1 tsp salt',
+      'For men: 4 chicken thighs',
+      'For Elena: 1 block paneer cubed',
+      'For all: 1 head cauliflower (riced), 1 onion, 2 garlic, 1 tsp cumin seeds, 1 cup peas, cilantro, mint chutney or yogurt sauce',
+      'Side salad: cucumber, tomato, red onion, lemon'],
+    steps: [
+      'Mix marinade. Coat chicken (or paneer), rest 20 min minimum.',
+      'Preheat oven 425°F.',
+      'Roast chicken 22-25 min. Paneer on its own tray for 12 min.',
+      'Cauli rice: sauté onion 4 min, add cumin seeds + garlic, then cauli. Cook 6 min, add peas last 2 min.',
+      'Plate over cauli rice with chutney, cilantro, side salad.'],
+    tip: 'Bold spices, lower-carb base.',
+    variants: { meat: 'Tandoori chicken thighs', veg: 'Tandoori paneer' } },
+  dn_souvlaki: { name: 'Greek Chicken / Halloumi Souvlaki', emoji: '🇬🇷', time: 30, kcal: 560, protein: 42,
+    ingredients: [
+      'For all: 4 whole wheat pitas, 1 cup tzatziki, 2 cups shredded romaine, 1 tomato diced, ½ red onion sliced, kalamata olives, fresh dill',
+      'Marinade: ¼ cup olive oil + 3 tbsp lemon + 3 garlic cloves + 2 tsp oregano + 1 tsp thyme + S&P',
+      'For men: 2 chicken breasts cubed',
+      'For Elena: 1 block halloumi cubed'],
+    steps: [
+      'Marinate chicken (or halloumi) 15+ min.',
+      'Thread onto skewers (or grill flat).',
+      'Cook chicken 10-12 min, halloumi 6 min total.',
+      'Warm pitas briefly.',
+      'Build: pita, tzatziki, lettuce, tomato, onion, protein, olives, dill.'],
+    tip: 'Sunny Greek night.',
+    variants: { meat: 'Chicken souvlaki', veg: 'Halloumi souvlaki' } },
+
+  // ---- Vegetarian family dinners ----
+  dn_dal: { name: 'Coconut Red Lentil Dal + Brown Rice', emoji: '🥥', time: 30, kcal: 480, protein: 22,
+    ingredients: ['1.5 cups red lentils','1 onion','4 garlic cloves','2 inch ginger','1 can diced tomatoes','1 can light coconut milk','3 cups veg stock','2 tsp cumin','2 tsp turmeric','1 tbsp curry powder','1 tsp garam masala','½ tsp cayenne','2 tbsp coconut oil','1 cup brown rice','2 cups spinach','Cilantro, lime, naan'],
+    steps: ['Cook brown rice.','Sauté onion 5 min in coconut oil.','Add garlic, ginger, spices, cook 1 min.','Add lentils, tomatoes, coconut milk, stock.','Simmer 18-22 min until creamy.','Stir in spinach, season.','Serve over rice with cilantro, lime, naan.'],
+    tip: 'Cozy and healing.', veg: true },
+  dn_peppers: { name: 'Quinoa Stuffed Bell Peppers', emoji: '🫑', time: 45, kcal: 460, protein: 21,
+    ingredients: ['6 large bell peppers (tops cut, seeded)','1 cup quinoa','1 onion','3 garlic cloves','1 can diced tomatoes drained','1 can black beans','1 cup corn','1 tsp cumin','1 tsp smoked paprika','1 tsp oregano','½ cup feta','½ cup mozzarella','Parsley'],
+    steps: ['Preheat 375°F. Cook quinoa.','Sauté onion + garlic 5 min, add spices.','Mix with quinoa, beans, tomatoes, corn, half feta.','Stuff peppers, top with mozzarella.','Bake 30 min (cover if browning fast).','Top with feta + parsley.'],
+    tip: 'Make-ahead friendly.', veg: true },
+  dn_thai: { name: 'Thai Red Curry with Tofu', emoji: '🌿', time: 25, kcal: 510, protein: 24,
+    ingredients: ['1 block extra-firm tofu cubed','2 tbsp red curry paste','1 can coconut milk','1 cup veg broth','1 red bell pepper','1 zucchini','1 cup snap peas','1 cup mushrooms','1 inch ginger','2 garlic cloves','2 tbsp soy sauce','1 tbsp brown sugar','1 tbsp lime juice','Thai basil/cilantro','1 cup jasmine rice'],
+    steps: ['Cook rice.','Pan-fry tofu in oil until golden, set aside.','Sauté garlic, ginger, curry paste 1 min.','Add coconut milk + broth, simmer 5 min.','Add veg, simmer 6 min.','Add tofu, soy, sugar, lime.','Serve over rice with herbs.'],
+    tip: 'Fragrant and quick.', veg: true },
+  dn_chickpea_curry: { name: 'Chana Masala (Chickpea Curry)', emoji: '🍛', time: 30, kcal: 470, protein: 19,
+    ingredients: ['2 cans chickpeas','1 onion','4 garlic cloves','2 inch ginger','1 can diced tomatoes','2 tsp garam masala','1 tsp cumin','1 tsp coriander','1 tsp turmeric','½ tsp chili powder','½ cup water','2 tbsp oil','1 cup basmati rice','Cilantro, lemon, yogurt'],
+    steps: ['Cook rice.','Sauté onion 6 min until golden.','Add garlic, ginger, spices, cook 1 min.','Add tomatoes, simmer 8 min.','Add chickpeas + water, simmer 12 min, mash some for thickness.','Finish with lemon, top with cilantro + yogurt.'],
+    tip: 'Restaurant-quality, easy.', veg: true },
+  dn_eggplant: { name: 'Easy Eggplant Parmesan Bake', emoji: '🍆', time: 50, kcal: 490, protein: 22,
+    ingredients: ['2 large eggplants sliced ½ inch','2 cups marinara','1.5 cups shredded mozzarella','½ cup parmesan','½ cup whole wheat breadcrumbs','2 tsp Italian herbs','3 garlic cloves','Olive oil','Fresh basil'],
+    steps: ['Preheat 400°F. Salt eggplant 15 min, pat dry.','Brush both sides with oil, season, bake 20 min on 2 trays, flipping once.','Layer in baking dish: marinara, eggplant, mozzarella. Repeat 2x.','Top with parmesan, breadcrumbs, herbs.','Bake 20 min until bubbly.','Top with basil.'],
+    tip: 'Lighter than fried.', veg: true },
+  dn_shakshuka: { name: 'Shakshuka with Crusty Bread', emoji: '🍳', time: 25, kcal: 420, protein: 22,
+    ingredients: ['6 large eggs','1 onion','1 red pepper','4 garlic cloves','2 cans crushed tomatoes','1 tbsp tomato paste','1.5 tsp cumin','1.5 tsp paprika','1 tsp smoked paprika','Pinch cayenne','½ cup feta','Fresh parsley','4 slices crusty bread'],
+    steps: ['Sauté onion + pepper 6 min.','Add garlic, spices, paste 1 min.','Add tomatoes, simmer 10 min.','Make 6 wells, crack eggs.','Cover, simmer 6-8 min until whites set, yolks runny.','Top with feta + herbs. Serve with bread.'],
+    tip: 'Runny yolks heaven.', veg: true },
+  dn_risotto: { name: 'Mushroom Spinach Risotto', emoji: '🍄', time: 40, kcal: 510, protein: 18,
+    ingredients: ['1.5 cups arborio rice','6 cups warm veg stock','1 onion','4 garlic cloves','4 cups mixed mushrooms','1 cup white wine (or extra stock)','½ cup parmesan','2 cups baby spinach','2 tbsp butter','2 tbsp olive oil','Thyme, parsley'],
+    steps: ['Sear mushrooms in olive oil until golden, set aside.','Sauté onion in butter 4 min, add garlic.','Add rice, toast 2 min.','Add wine, simmer until absorbed.','Add stock 1 ladle at a time, stirring, until creamy (18-20 min).','Stir in mushrooms, spinach, parmesan, thyme.','Top with parsley.'],
+    tip: 'Worth the stirring.', veg: true },
+  dn_burgers: { name: 'Black Bean Burgers + Sweet Potato Wedges', emoji: '🍔', time: 35, kcal: 500, protein: 20,
+    ingredients: ['2 cans black beans','½ cup cooked quinoa','½ cup whole wheat breadcrumbs','1 small onion grated','2 garlic cloves','1 egg','1 tbsp soy sauce','1 tsp smoked paprika','1 tsp cumin','½ tsp chipotle','6 whole grain buns','2 large sweet potatoes wedges','Lettuce, tomato, avocado, mustard, ketchup'],
+    steps: ['Preheat 425°F. Toss sweet potato wedges with oil + paprika + salt. Roast 25-30 min, flipping.','Mash beans roughly. Mix with quinoa, breadcrumbs, onion, garlic, egg, soy, spices.','Form 6 patties.','Cook in oiled skillet 4 min/side.','Toast buns. Build with lettuce, tomato, avocado, condiments.'],
+    tip: 'Better than takeout.', veg: true }
+};
+
+// ============== WEEKLY PLAN ==============
+const WEEK_A = [
+  { B:['s_berry','m_yogurt','d_egg'],     L:'w_mezze',   D:'dn_dal',           familyLunch:true },
+  { B:['s_green','m_scramble','d_yogurt'],L:'l_chickpea',D:'dn_moroccan',      familyLunch:false },
+  { B:['s_choco','m_cottage','d_cottage'],L:'l_lentil',  D:'dn_peppers',       familyLunch:false },
+  { B:['s_tropical','m_avo','d_toast'],   L:'l_buddha',  D:'dn_stirfry',       familyLunch:false },
+  { B:['s_pbj','m_tofu','d_smoothie'],    L:'l_tofu',    D:'dn_thai',          familyLunch:false },
+  { B:['s_mocha','m_oats','d_eggs2'],     L:'l_caprese', D:'dn_lemon',         familyLunch:false },
+  { B:['s_oat','m_omelet','d_banana'],    L:'w_grain',   D:'dn_chickpea_curry',familyLunch:true }
+];
+const WEEK_B = [
+  { B:['s_berry','m_yogurt','d_egg'],     L:'w_grain',   D:'dn_eggplant',  familyLunch:true },
+  { B:['s_green','m_scramble','d_yogurt'],L:'l_wrap',    D:'dn_tacos',     familyLunch:false },
+  { B:['s_choco','m_cottage','d_cottage'],L:'l_curry',   D:'dn_shakshuka', familyLunch:false },
+  { B:['s_tropical','m_avo','d_toast'],   L:'l_chickpea',D:'dn_tandoori',  familyLunch:false },
+  { B:['s_pbj','m_tofu','d_smoothie'],    L:'l_lentil',  D:'dn_risotto',   familyLunch:false },
+  { B:['s_mocha','m_oats','d_eggs2'],     L:'l_buddha',  D:'dn_souvlaki',  familyLunch:false },
+  { B:['s_oat','m_omelet','d_banana'],    L:'w_mezze',   D:'dn_burgers',   familyLunch:true }
+];
+
+// ✅ Updated start date: Sunday April 26, 2026
+const START_DATE = new Date(2026, 3, 26);
+
+function getDate(idx) {
+  const d = new Date(START_DATE);
+  d.setDate(d.getDate() + idx);
+  return d;
+}
+function getDayPlan(idx) {
+  const cycleWeek = Math.floor(idx / 7) % 2;
+  const dow = idx % 7;
+  return cycleWeek === 0 ? WEEK_A[dow] : WEEK_B[dow];
+}
+function fmtDate(d) {
+  return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+}
+function fmtShort(d) {
+  return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+
+// ============== SHOPPING LISTS ==============
+const SHOPPING_PATTERNS = [
+  {
+    title: 'Mezze • Dal • Moroccan Sheet Pan',
+    produce: ['Bananas (5)','Mixed berries (2 cups)','Frozen mixed berries (1 cup)','Spinach (large bag)','Cucumbers (3)','Cherry tomatoes (2 pints)','Apple (1)','Lemons (5)','Mango (1)','Garlic (1 head)','Yellow onions (3)','Red onions (2)','Red bell peppers (2)','Zucchini (2)','Cauliflower (1 small head)','Parsley (1 bunch)','Mint (1 bunch)','Cilantro (1 bunch)','Fresh dill (small bunch)','Avocado (1)'],
+    protein: ['Eggs (1 dozen)','0% Greek yogurt (large tub)','Feta cheese','Whole milk','Unsweetened almond milk','Boneless chicken thighs (3)','Canned chickpeas (3 cans)','Red lentils (1.5 cups)','Hummus (tub)','Frozen falafel (8 pieces)','Tzatziki (small tub)'],
+    pantry: ['Rolled oats','Vanilla whey protein','Peanut butter','Honey','Chia seeds','Raw almonds','Walnuts','Whole wheat pita (4)','Bulgur','Kalamata olives','Couscous','Brown rice','Light coconut milk (2 cans)','Diced tomatoes (2 cans)','Naan','Olive oil','Spices: cumin, coriander, cinnamon, turmeric, paprika, cayenne, garam masala, oregano','Veg stock cubes']
+  },
+  {
+    title: 'Stuffed Peppers • Beef Stir-Fry',
+    produce: ['Bananas (3)','Mango (1)','Pineapple (small)','Bell peppers (8 large)','Carrots (2)','Sweet potato (1 large)','Baby spinach (bag)','Broccoli (4 cups)','Red bell pepper (1)','Spring onions (2)','Garlic (1 head)','Ginger (2 inch piece)','Onion (2)','Cucumber (1)','Avocado (1)','Cherry tomatoes (1 pint)','Lemons (3)'],
+    protein: ['Cottage cheese','0% Greek yogurt','Eggs','Beef sirloin (12 oz)','Canned black beans (1 can)','Canned chickpeas (1 can)','Mozzarella (½ cup)','Feta','Red lentils (1 cup)','Almond milk'],
+    pantry: ['Cocoa powder','Chocolate protein powder','Almond butter','Quinoa','Brown rice','Tahini','Maple syrup','Pumpkin seeds','Sesame seeds','Soy sauce','Rice vinegar','Sesame oil','Cornstarch','Honey','Diced tomatoes (1 can)','Corn (1 cup, frozen ok)','Smoked paprika','Pumpkin seeds','Pita (if needed)']
+  },
+  {
+    title: 'Thai Curry • Lemon Chicken',
+    produce: ['Strawberries (frozen, 1 cup)','Bananas (3)','Bell peppers (red & assorted)','Snap peas (1 cup)','Mushrooms (4 cups mixed)','Zucchini (2)','Asparagus (2 cups)','Cherry tomatoes (1 pint)','Lemons (4)','Limes (2)','Garlic (head)','Ginger','Thai basil or cilantro','Fresh basil','Parsley'],
+    protein: ['Chicken breasts (2 large)','Halloumi (1 block)','Extra-firm tofu (2 blocks)','Canned cannellini beans (1 can)','Fresh mozzarella balls (¼ cup)','Eggs','Almond milk','Greek yogurt'],
+    pantry: ['Red curry paste','Coconut milk (1 can)','Jasmine rice','Quinoa','Pine nuts','Soy sauce','Brown sugar','Whole grain bread','Balsamic glaze','Olive oil','Espresso pods or instant coffee','Oregano','Thyme','Nutritional yeast']
+  },
+  {
+    title: 'Chana Masala • Greek Grain Bowl • Eggplant Parm',
+    produce: ['Mixed berries (2 cups)','Bananas (3)','Apple (1)','Eggplants (2 large)','Arugula (2 cups)','Cucumber (2)','Cherry tomatoes (2 pints)','Red onion (1)','Lemons (4)','Limes (1)','Garlic (head)','Ginger','Cilantro','Parsley','Fresh basil','Mushrooms (1 cup)'],
+    protein: ['Chicken breasts (2)','Halloumi (1 block)','Eggs','0% Greek yogurt','Mozzarella (1.5 cups)','Parmesan (½ cup)','Feta','Canned chickpeas (2 cans)','Cottage cheese (small)'],
+    pantry: ['Rolled oats','Vanilla protein powder','Almond butter','Maple syrup','Vanilla extract','Farro or quinoa','Marinara sauce (2 cups)','Whole wheat breadcrumbs','Italian herbs','Basmati rice','Garam masala','Coriander','Olives (kalamata)','Naan']
+  },
+  {
+    title: 'Tacos • Shakshuka',
+    produce: ['Mango (1)','Spinach (bag)','Cherry tomatoes (1 pint)','Avocado (3)','Lettuce (1 head romaine)','Lime (3)','Lemons (2)','Bell peppers (red, 2)','Onions (3)','Garlic (head)','Ginger','Cucumber (1)','Cilantro','Parsley','Corn (½ cup)','Tomato (1 large)'],
+    protein: ['Lean ground beef (1 lb)','Eggs (large)','Cottage cheese','0% Greek yogurt','Feta (½ cup)','Canned black beans (2 cans)','Canned chickpeas (1 can)','Whole grain tortillas (large)','Almond milk','Whey protein'],
+    pantry: ['Cocoa','Corn tortillas (8)','Salsa (1 cup)','Crushed tomatoes (2 cans)','Diced tomatoes (1 can)','Tomato paste','Chili powder','Cumin','Smoked paprika','Coconut milk','Crusty whole grain bread (4 slices)','Chocolate protein','Rolled oats','Almond butter']
+  },
+  {
+    title: 'Tandoori • Mushroom Risotto',
+    produce: ['Pineapple (small)','Mango (1)','Bananas (3)','Strawberries (frozen)','Cauliflower (1 head)','Mushrooms (4 cups mixed)','Spinach (large bag)','Cucumber (2)','Tomato (2)','Red onion (1)','Lemons (3)','Limes (1)','Cilantro','Mint','Parsley','Thyme (small bunch)','Carrots (2)','Peas (1 cup, frozen ok)','Cherry tomatoes (1 pint)'],
+    protein: ['Chicken thighs (4)','Paneer (1 block)','0% Greek yogurt (large)','Parmesan (½ cup)','Eggs','Canned chickpeas (1 can)','Red lentils (1 cup)','Tofu (½ block)','Cottage cheese','Almond milk'],
+    pantry: ['Arborio rice','Veg stock (6 cups)','White wine (1 cup, optional)','Butter','Olive oil','Garam masala','Tandoori spice (or paprika+cumin+turmeric+cayenne)','Mint chutney','Coconut milk (light)','Whole grain bread','Coffee','Cocoa']
+  },
+  {
+    title: 'Souvlaki • Bean Burgers • Mezze',
+    produce: ['Mixed berries (1 cup)','Bananas (4)','Lemons (4)','Limes (1)','Cucumber (3)','Cherry tomatoes (2 pints)','Lettuce (romaine head)','Tomato (2)','Red onion (2)','Yellow onion (1)','Avocado (2)','Sweet potatoes (2 large)','Garlic (head)','Spinach (bag)','Fresh dill','Parsley','Mint','Cilantro','Bell pepper (1)'],
+    protein: ['Chicken breasts (2)','Halloumi (1 block)','Eggs','0% Greek yogurt','Tzatziki','Hummus (tub)','Feta','Canned black beans (2 cans)','Cottage cheese','Almond milk'],
+    pantry: ['Whole wheat pita (8)','Frozen falafel (8)','Bulgur','Kalamata olives','Whole grain buns (6)','Quinoa','Whole wheat breadcrumbs','Chipotle powder','Smoked paprika','Soy sauce','Mustard','Ketchup','Mocha protein','Rolled oats','Almond butter']
+  }
+];
+
+function getShoppingForTrip(tripIdx) {
+  return SHOPPING_PATTERNS[tripIdx % 7];
+}
+
+// ============== APP ==============
+ function MealPlanApp() {
+  const [view, setView] = _react.useState.call(void 0, 'today');
+  const [dayIdx, setDayIdx] = _react.useState.call(void 0, 0);
+  const [selectedRecipe, setSelectedRecipe] = _react.useState.call(void 0, null);
+  const [recipeFilter, setRecipeFilter] = _react.useState.call(void 0, 'all');
+  const [search, setSearch] = _react.useState.call(void 0, '');
+  const [checked, setChecked] = _react.useState.call(void 0, {});
+  const [openTrip, setOpenTrip] = _react.useState.call(void 0, 0);
+
+  const day = _react.useMemo.call(void 0, () => getDayPlan(dayIdx), [dayIdx]);
+  const date = _react.useMemo.call(void 0, () => getDate(dayIdx), [dayIdx]);
+  const tripIdx = Math.floor(dayIdx / 2);
+  const shoppingDays = _react.useMemo.call(void 0, () => {
+    const start = getDate(tripIdx * 2);
+    const end = getDate(tripIdx * 2 + 1);
+    return `${fmtShort(start)} → ${fmtShort(end)}`;
+  }, [tripIdx]);
+
+  const isFamilyLunch = day.familyLunch;
+  const dinnerRecipe = RECIPES[day.D];
+  const isMeatDinner = !!dinnerRecipe.variants;
+
+  function toggleCheck(key) {
+    setChecked(prev => ({ ...prev, [key]: !prev[key] }));
+  }
+
+  const planEnd = getDate(27);
+  const planRange = `${fmtShort(START_DATE).replace(',', '')} – ${fmtShort(planEnd).replace(',', '')}`;
+
+  return (
+    _react2.default.createElement('div', { className: "min-h-screen bg-gradient-to-br from-amber-50 via-rose-50 to-emerald-50 pb-24"     ,}
+      , _react2.default.createElement('header', { className: "bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-500 text-white shadow-lg"     ,}
+        , _react2.default.createElement('div', { className: "max-w-5xl mx-auto px-4 py-5"   ,}
+          , _react2.default.createElement('div', { className: "flex items-center justify-between flex-wrap gap-3"    ,}
+            , _react2.default.createElement('div', { className: "flex items-center gap-3"  ,}
+              , _react2.default.createElement('div', { className: "bg-white/20 backdrop-blur p-2 rounded-xl"   ,}
+                , _react2.default.createElement(_lucidereact.ChefHat, { className: "w-6 h-6" ,} )
+              )
+              , _react2.default.createElement('div', null
+                , _react2.default.createElement('h1', { className: "text-xl font-bold tracking-tight"  ,}, "Family Kitchen" )
+                , _react2.default.createElement('p', { className: "text-xs text-white/80" ,}, "4-week plan • "   , planRange)
+              )
+            )
+            , _react2.default.createElement('div', { className: "flex gap-2" ,}
+              , Object.entries(FAMILY).map(([k, p]) => {
+                const Icon = p.icon;
+                return (
+                  _react2.default.createElement('div', { key: k, className: "bg-white/15 backdrop-blur rounded-full px-3 py-1.5 flex items-center gap-1.5 text-sm"        ,}
+                    , _react2.default.createElement(Icon, { className: "w-3.5 h-3.5" ,} )
+                    , _react2.default.createElement('span', { className: "font-medium",}, p.name)
+                  )
+                );
+              })
+            )
+          )
+        )
+      )
+
+      , view === 'today' && (
+        _react2.default.createElement('div', { className: "bg-white shadow-sm sticky top-0 z-20"    ,}
+          , _react2.default.createElement('div', { className: "max-w-5xl mx-auto px-4 py-3"   ,}
+            , _react2.default.createElement('div', { className: "flex items-center gap-2"  ,}
+              , _react2.default.createElement('button', {
+                onClick: () => setDayIdx(Math.max(0, dayIdx - 1)),
+                className: "p-2 rounded-full hover:bg-gray-100 disabled:opacity-30"   ,
+                disabled: dayIdx === 0,}
+
+                , _react2.default.createElement(_lucidereact.ChevronLeft, { className: "w-5 h-5" ,} )
+              )
+              , _react2.default.createElement('div', { className: "flex-1 overflow-x-auto" ,}
+                , _react2.default.createElement('div', { className: "flex gap-1.5 pb-1"  ,}
+                  , Array.from({ length: 28 }).map((_, i) => {
+                    const d = getDate(i);
+                    const isActive = i === dayIdx;
+                    const dow = d.toLocaleDateString('en-US', { weekday: 'short' }).slice(0, 1);
+                    return (
+                      _react2.default.createElement('button', {
+                        key: i,
+                        onClick: () => setDayIdx(i),
+                        className: `flex-shrink-0 flex flex-col items-center justify-center w-10 h-14 rounded-xl text-xs transition-all
+                          ${isActive
+                            ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-md scale-105'
+                            : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`,}
+
+                        , _react2.default.createElement('span', { className: "font-medium opacity-70" ,}, dow)
+                        , _react2.default.createElement('span', { className: "text-base font-bold" ,}, d.getDate())
+                      )
+                    );
+                  })
+                )
+              )
+              , _react2.default.createElement('button', {
+                onClick: () => setDayIdx(Math.min(27, dayIdx + 1)),
+                className: "p-2 rounded-full hover:bg-gray-100 disabled:opacity-30"   ,
+                disabled: dayIdx === 27,}
+
+                , _react2.default.createElement(_lucidereact.ChevronRight, { className: "w-5 h-5" ,} )
+              )
+            )
+          )
+        )
+      )
+
+      , _react2.default.createElement('main', { className: "max-w-5xl mx-auto px-4 py-6"   ,}
+        , _react2.default.createElement(_framermotion.AnimatePresence, { mode: "wait",}
+          , view === 'today' && (
+            _react2.default.createElement(_framermotion.motion.div, { key: "today", initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 },}
+              , _react2.default.createElement('div', { className: "mb-5",}
+                , _react2.default.createElement('p', { className: "text-sm text-gray-500 font-medium"  ,}, "Day " , dayIdx + 1, " of 28"  )
+                , _react2.default.createElement('h2', { className: "text-2xl md:text-3xl font-bold text-gray-900"   ,}, fmtDate(date))
+                , _react2.default.createElement('div', { className: "mt-2 flex flex-wrap gap-2 text-xs"    ,}
+                  , _react2.default.createElement('span', { className: "bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-medium"     ,}, "🛒 Shopping pair: "
+                       , shoppingDays
+                  )
+                  , isMeatDinner && (
+                    _react2.default.createElement('span', { className: "bg-orange-100 text-orange-800 px-2.5 py-1 rounded-full font-medium"     ,}, "🥩 Meat day"
+
+                    )
+                  )
+                  , !isMeatDinner && (
+                    _react2.default.createElement('span', { className: "bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-medium"     ,}, "🌱 Vegetarian day"
+
+                    )
+                  )
+                  , isFamilyLunch && (
+                    _react2.default.createElement('span', { className: "bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full font-medium"     ,}, "👨‍👩‍👦 Family lunch"
+
+                    )
+                  )
+                )
+              )
+
+              , _react2.default.createElement(Section, { title: "Breakfast", icon: _lucidereact.Coffee, subtitle: "Each person, their own start"    ,}
+                , _react2.default.createElement('div', { className: "grid grid-cols-1 md:grid-cols-3 gap-4"   ,}
+                  , (['teen','mom','dad']).map((k, i) => {
+                    const r = RECIPES[day.B[i]];
+                    return _react2.default.createElement(PersonMealCard, { key: k, person: FAMILY[k], recipe: r, onClick: () => setSelectedRecipe(r),} );
+                  })
+                )
+              )
+
+              , _react2.default.createElement(Section, { title: "Lunch", icon: _lucidereact.Soup, subtitle: isFamilyLunch ? "Whole family" : "Elena only — guys aren't home",}
+                , isFamilyLunch ? (
+                  _react2.default.createElement(FamilyMealCard, { recipe: RECIPES[day.L], onClick: () => setSelectedRecipe(RECIPES[day.L]),} )
+                ) : (
+                  _react2.default.createElement('div', { className: "max-w-md",}
+                    , _react2.default.createElement(PersonMealCard, { person: FAMILY.mom, recipe: RECIPES[day.L], onClick: () => setSelectedRecipe(RECIPES[day.L]),} )
+                  )
+                )
+              )
+
+              , _react2.default.createElement(Section, { title: "Dinner", icon: _lucidereact.Utensils, subtitle: isMeatDinner ? "One dish, two proteins" : "Whole family, vegetarian",}
+                , _react2.default.createElement(FamilyMealCard, { recipe: dinnerRecipe, onClick: () => setSelectedRecipe(dinnerRecipe), highlight: true,} )
+              )
+            )
+          )
+
+          , view === 'shopping' && (
+            _react2.default.createElement(_framermotion.motion.div, { key: "shop", initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 },}
+              , _react2.default.createElement('div', { className: "mb-4",}
+                , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900"  ,}, "Shopping Lists" )
+                , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, "Every 2 days • 14 trips total"      )
+              )
+              , _react2.default.createElement('div', { className: "space-y-3",}
+                , Array.from({ length: 14 }).map((_, i) => {
+                  const list = getShoppingForTrip(i);
+                  const start = getDate(i * 2);
+                  const end = getDate(i * 2 + 1);
+                  const isCurrent = i === tripIdx;
+                  const isOpen = openTrip === i;
+                  return (
+                    _react2.default.createElement(_framermotion.motion.div, {
+                      key: i,
+                      layout: true,
+                      className: `bg-white rounded-2xl shadow-sm overflow-hidden border ${isCurrent ? 'border-emerald-400 ring-2 ring-emerald-100' : 'border-gray-100'}`,}
+
+                      , _react2.default.createElement('button', {
+                        onClick: () => setOpenTrip(isOpen ? -1 : i),
+                        className: "w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition"       ,}
+
+                        , _react2.default.createElement('div', { className: "flex items-center gap-3 text-left"   ,}
+                          , _react2.default.createElement('div', { className: `w-10 h-10 rounded-xl flex items-center justify-center ${isCurrent ? 'bg-emerald-500 text-white' : 'bg-amber-100 text-amber-700'}`,}
+                            , _react2.default.createElement(_lucidereact.ShoppingCart, { className: "w-5 h-5" ,} )
+                          )
+                          , _react2.default.createElement('div', null
+                            , _react2.default.createElement('p', { className: "text-xs text-gray-500 font-medium"  ,}, "Trip " , i + 1, " • "  , fmtShort(start), " → "  , fmtShort(end))
+                            , _react2.default.createElement('p', { className: "font-semibold text-gray-900" ,}, list.title)
+                          )
+                          , isCurrent && (
+                            _react2.default.createElement('span', { className: "bg-emerald-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold"      ,}, "Now")
+                          )
+                        )
+                        , _react2.default.createElement(_lucidereact.ChevronRight, { className: `w-5 h-5 text-gray-400 transition-transform ${isOpen ? 'rotate-90' : ''}`,} )
+                      )
+                      , _react2.default.createElement(_framermotion.AnimatePresence, null
+                        , isOpen && (
+                          _react2.default.createElement(_framermotion.motion.div, {
+                            initial: { height: 0, opacity: 0 },
+                            animate: { height: 'auto', opacity: 1 },
+                            exit: { height: 0, opacity: 0 },
+                            className: "overflow-hidden",}
+
+                            , _react2.default.createElement('div', { className: "px-5 pb-5 grid grid-cols-1 md:grid-cols-3 gap-4"     ,}
+                              , _react2.default.createElement(ShoppingCategory, { title: "🥬 Produce" , items: list.produce, tripIdx: i, cat: "p", checked: checked, onToggle: toggleCheck,} )
+                              , _react2.default.createElement(ShoppingCategory, { title: "🥚 Protein & Dairy"   , items: list.protein, tripIdx: i, cat: "d", checked: checked, onToggle: toggleCheck,} )
+                              , _react2.default.createElement(ShoppingCategory, { title: "🌾 Pantry & Spices"   , items: list.pantry, tripIdx: i, cat: "g", checked: checked, onToggle: toggleCheck,} )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  );
+                })
+              )
+            )
+          )
+
+          , view === 'recipes' && (
+            _react2.default.createElement(_framermotion.motion.div, { key: "rec", initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 },}
+              , _react2.default.createElement('div', { className: "mb-5",}
+                , _react2.default.createElement('h2', { className: "text-2xl font-bold text-gray-900"  ,}, "Recipe Library" )
+                , _react2.default.createElement('p', { className: "text-sm text-gray-600" ,}, Object.keys(RECIPES).length, " recipes" )
+              )
+              , _react2.default.createElement('div', { className: "mb-4 flex flex-col sm:flex-row gap-3"    ,}
+                , _react2.default.createElement('div', { className: "relative flex-1" ,}
+                  , _react2.default.createElement(_lucidereact.Search, { className: "w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"      ,} )
+                  , _react2.default.createElement('input', {
+                    type: "text",
+                    value: search,
+                    onChange: (e) => setSearch(e.target.value),
+                    placeholder: "Search recipes..." ,
+                    className: "w-full pl-9 pr-3 py-2.5 bg-white rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"           ,}
+                  )
+                )
+                , _react2.default.createElement('div', { className: "flex gap-2 overflow-x-auto"  ,}
+                  , [
+                    { k: 'all', label: 'All' },
+                    { k: 'breakfast', label: '☀️ Breakfast' },
+                    { k: 'lunch', label: '🥗 Lunch' },
+                    { k: 'dinner', label: '🍽️ Dinner' }
+                  ].map(c => (
+                    _react2.default.createElement('button', {
+                      key: c.k,
+                      onClick: () => setRecipeFilter(c.k),
+                      className: `px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition ${
+                        recipeFilter === c.k
+                          ? 'bg-emerald-500 text-white shadow'
+                          : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+                      }`,}
+
+                      , c.label
+                    )
+                  ))
+                )
+              )
+              , _react2.default.createElement('div', { className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"    ,}
+                , Object.entries(RECIPES)
+                  .filter(([id, r]) => {
+                    if (search && !r.name.toLowerCase().includes(search.toLowerCase())) return false;
+                    if (recipeFilter === 'all') return true;
+                    if (recipeFilter === 'breakfast') return id.startsWith('s_') || id.startsWith('m_') || id.startsWith('d_');
+                    if (recipeFilter === 'lunch') return id.startsWith('l_') || id.startsWith('w_');
+                    if (recipeFilter === 'dinner') return id.startsWith('dn_');
+                    return true;
+                  })
+                  .map(([id, r]) => (
+                    _react2.default.createElement('button', {
+                      key: id,
+                      onClick: () => setSelectedRecipe(r),
+                      className: "bg-white rounded-2xl p-4 text-left shadow-sm hover:shadow-md transition border border-gray-100 hover:border-emerald-200"         ,}
+
+                      , _react2.default.createElement('div', { className: "text-3xl mb-2" ,}, r.emoji)
+                      , _react2.default.createElement('h3', { className: "font-semibold text-gray-900 text-sm leading-tight mb-1.5"    ,}, r.name)
+                      , _react2.default.createElement('div', { className: "flex items-center gap-2 text-xs text-gray-500"    ,}
+                        , _react2.default.createElement(_lucidereact.Clock, { className: "w-3 h-3" ,} ), " " , r.time, "m"
+                        , _react2.default.createElement(_lucidereact.Flame, { className: "w-3 h-3 ml-1"  ,} ), " " , r.kcal
+                      )
+                    )
+                  ))
+              )
+            )
+          )
+        )
+      )
+
+      , _react2.default.createElement('nav', { className: "fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-30"        ,}
+        , _react2.default.createElement('div', { className: "max-w-5xl mx-auto grid grid-cols-3"   ,}
+          , [
+            { k: 'today', label: 'Today', Icon: _lucidereact.Calendar },
+            { k: 'shopping', label: 'Shopping', Icon: _lucidereact.ShoppingCart },
+            { k: 'recipes', label: 'Recipes', Icon: _lucidereact.BookOpen }
+          ].map(({ k, label, Icon }) => (
+            _react2.default.createElement('button', {
+              key: k,
+              onClick: () => setView(k),
+              className: `flex flex-col items-center gap-1 py-3 transition relative ${
+                view === k ? 'text-emerald-600' : 'text-gray-500 hover:text-gray-800'
+              }`,}
+
+              , view === k && (
+                _react2.default.createElement(_framermotion.motion.div, {
+                  layoutId: "navIndicator",
+                  className: "absolute top-0 left-1/4 right-1/4 h-1 bg-emerald-500 rounded-b-full"      ,}
+                )
+              )
+              , _react2.default.createElement(Icon, { className: "w-5 h-5" ,} )
+              , _react2.default.createElement('span', { className: "text-xs font-medium" ,}, label)
+            )
+          ))
+        )
+      )
+
+      , _react2.default.createElement(_framermotion.AnimatePresence, null
+        , selectedRecipe && (
+          _react2.default.createElement(_framermotion.motion.div, {
+            className: "fixed inset-0 z-50 bg-black/60 flex items-end md:items-center justify-center p-0 md:p-4"         ,
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+            exit: { opacity: 0 },
+            onClick: () => setSelectedRecipe(null),}
+
+            , _react2.default.createElement(_framermotion.motion.div, {
+              className: "bg-white rounded-t-3xl md:rounded-3xl w-full max-w-2xl max-h-screen overflow-hidden flex flex-col"        ,
+              initial: { y: 60 },
+              animate: { y: 0 },
+              exit: { y: 60 },
+              onClick: (e) => e.stopPropagation(),}
+
+              , _react2.default.createElement('div', { className: "bg-gradient-to-br from-emerald-500 via-teal-500 to-amber-500 text-white p-6 relative"      ,}
+                , _react2.default.createElement('button', {
+                  onClick: () => setSelectedRecipe(null),
+                  className: "absolute top-4 right-4 bg-white/20 hover:bg-white/30 rounded-full p-1.5"      ,}
+
+                  , _react2.default.createElement(_lucidereact.X, { className: "w-5 h-5" ,} )
+                )
+                , _react2.default.createElement('div', { className: "text-5xl mb-2" ,}, selectedRecipe.emoji)
+                , _react2.default.createElement('h2', { className: "text-2xl font-bold leading-tight pr-8"   ,}, selectedRecipe.name)
+                , _react2.default.createElement('div', { className: "mt-3 flex flex-wrap gap-3 text-sm"    ,}
+                  , _react2.default.createElement('span', { className: "bg-white/20 px-3 py-1 rounded-full flex items-center gap-1.5"      ,}
+                    , _react2.default.createElement(_lucidereact.Clock, { className: "w-3.5 h-3.5" ,} ), " " , selectedRecipe.time, " min"
+                  )
+                  , _react2.default.createElement('span', { className: "bg-white/20 px-3 py-1 rounded-full flex items-center gap-1.5"      ,}
+                    , _react2.default.createElement(_lucidereact.Flame, { className: "w-3.5 h-3.5" ,} ), " " , selectedRecipe.kcal, " kcal"
+                  )
+                  , _react2.default.createElement('span', { className: "bg-white/20 px-3 py-1 rounded-full flex items-center gap-1.5"      ,}, "💪 "
+                     , selectedRecipe.protein, "g protein"
+                  )
+                )
+              )
+              , _react2.default.createElement('div', { className: "overflow-y-auto p-6 space-y-5"  ,}
+                , selectedRecipe.variants && (
+                  _react2.default.createElement('div', { className: "bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-4"      ,}
+                    , _react2.default.createElement('div', { className: "flex-1",}
+                      , _react2.default.createElement('p', { className: "text-xs font-bold text-orange-700 uppercase tracking-wide mb-1"     ,}, "For Jamie & Christian"   )
+                      , _react2.default.createElement('p', { className: "font-semibold text-gray-900" ,}, "🥩 " , selectedRecipe.variants.meat)
+                    )
+                    , _react2.default.createElement('div', { className: "w-px bg-amber-300" ,} )
+                    , _react2.default.createElement('div', { className: "flex-1",}
+                      , _react2.default.createElement('p', { className: "text-xs font-bold text-emerald-700 uppercase tracking-wide mb-1"     ,}, "For Elena" )
+                      , _react2.default.createElement('p', { className: "font-semibold text-gray-900" ,}, "🌱 " , selectedRecipe.variants.veg)
+                    )
+                  )
+                )
+                , _react2.default.createElement('div', null
+                  , _react2.default.createElement('h3', { className: "text-sm font-bold text-gray-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5"        ,}
+                    , _react2.default.createElement(_lucidereact.Sparkles, { className: "w-4 h-4" ,} ), " Ingredients"
+                  )
+                  , _react2.default.createElement('ul', { className: "space-y-1.5",}
+                    , selectedRecipe.ingredients.map((ing, i) => (
+                      _react2.default.createElement('li', { key: i, className: "flex gap-2.5 text-gray-800 text-sm"   ,}
+                        , _react2.default.createElement('span', { className: "text-emerald-500 font-bold" ,}, "•")
+                        , _react2.default.createElement('span', null, ing)
+                      )
+                    ))
+                  )
+                )
+                , _react2.default.createElement('div', null
+                  , _react2.default.createElement('h3', { className: "text-sm font-bold text-gray-500 uppercase tracking-wider mb-2.5 flex items-center gap-1.5"        ,}
+                    , _react2.default.createElement(_lucidereact.ChefHat, { className: "w-4 h-4" ,} ), " How to Cook"
+                  )
+                  , _react2.default.createElement('ol', { className: "space-y-2.5",}
+                    , selectedRecipe.steps.map((s, i) => (
+                      _react2.default.createElement('li', { key: i, className: "flex gap-3 text-gray-800 text-sm leading-relaxed"    ,}
+                        , _react2.default.createElement('span', { className: "flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs"          ,}, i + 1)
+                        , _react2.default.createElement('span', { className: "pt-0.5",}, s)
+                      )
+                    ))
+                  )
+                )
+                , selectedRecipe.tip && (
+                  _react2.default.createElement('div', { className: "bg-emerald-50 border-l-4 border-emerald-400 rounded-r-xl p-3.5 text-sm text-emerald-900"      ,}
+                    , _react2.default.createElement('span', { className: "font-bold",}, "Tip:"), " " , selectedRecipe.tip
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  );
+} exports.default = MealPlanApp;
+
+function Section({ title, icon: Icon, subtitle, children }) {
+  return (
+    _react2.default.createElement('section', { className: "mb-7",}
+      , _react2.default.createElement('div', { className: "flex items-center gap-2 mb-3"   ,}
+        , _react2.default.createElement('div', { className: "w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center"         ,}
+          , _react2.default.createElement(Icon, { className: "w-4 h-4" ,} )
+        )
+        , _react2.default.createElement('div', null
+          , _react2.default.createElement('h3', { className: "font-bold text-gray-900 leading-tight"  ,}, title)
+          , _react2.default.createElement('p', { className: "text-xs text-gray-500" ,}, subtitle)
+        )
+      )
+      , children
+    )
+  );
+}
+
+function PersonMealCard({ person, recipe, onClick }) {
+  const Icon = person.icon;
+  return (
+    _react2.default.createElement('button', {
+      onClick: onClick,
+      className: `text-left bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition border ${person.border} hover:scale-[1.01] w-full`,}
+
+      , _react2.default.createElement('div', { className: "flex items-center gap-2 mb-3"   ,}
+        , _react2.default.createElement('div', { className: `w-7 h-7 rounded-lg ${person.accent} text-white flex items-center justify-center`,}
+          , _react2.default.createElement(Icon, { className: "w-4 h-4" ,} )
+        )
+        , _react2.default.createElement('span', { className: `text-xs font-bold uppercase tracking-wider ${person.text}`,}, person.name)
+      )
+      , _react2.default.createElement('div', { className: "flex items-start gap-2.5"  ,}
+        , _react2.default.createElement('div', { className: "text-3xl",}, recipe.emoji)
+        , _react2.default.createElement('div', { className: "flex-1 min-w-0" ,}
+          , _react2.default.createElement('p', { className: "font-semibold text-gray-900 text-sm leading-tight"   ,}, recipe.name)
+          , _react2.default.createElement('div', { className: "flex items-center gap-3 text-xs text-gray-500 mt-1.5"     ,}
+            , _react2.default.createElement('span', { className: "flex items-center gap-1"  ,}, _react2.default.createElement(_lucidereact.Clock, { className: "w-3 h-3" ,} ), recipe.time, "m")
+            , _react2.default.createElement('span', { className: "flex items-center gap-1"  ,}, _react2.default.createElement(_lucidereact.Flame, { className: "w-3 h-3" ,} ), recipe.kcal)
+            , _react2.default.createElement('span', null, recipe.protein, "g 💪" )
+          )
+        )
+      )
+    )
+  );
+}
+
+function FamilyMealCard({ recipe, onClick, highlight }) {
+  return (
+    _react2.default.createElement('button', {
+      onClick: onClick,
+      className: `text-left bg-white rounded-2xl p-5 shadow-sm hover:shadow-lg transition w-full border-2 ${
+        highlight ? 'border-amber-200 bg-gradient-to-br from-white to-amber-50' : 'border-gray-100'
+      } hover:scale-[1.005]`,}
+
+      , _react2.default.createElement('div', { className: "flex items-center gap-4"  ,}
+        , _react2.default.createElement('div', { className: "text-5xl flex-shrink-0" ,}, recipe.emoji)
+        , _react2.default.createElement('div', { className: "flex-1 min-w-0" ,}
+          , _react2.default.createElement('p', { className: "font-bold text-gray-900 text-base md:text-lg leading-tight"    ,}, recipe.name)
+          , recipe.variants && (
+            _react2.default.createElement('p', { className: "text-xs text-gray-600 mt-1"  ,}
+              , _react2.default.createElement('span', { className: "font-semibold text-orange-700" ,}, recipe.variants.meat)
+              , _react2.default.createElement('span', { className: "mx-1.5 text-gray-400" ,}, "/")
+              , _react2.default.createElement('span', { className: "font-semibold text-emerald-700" ,}, recipe.variants.veg)
+            )
+          )
+          , _react2.default.createElement('div', { className: "flex items-center gap-3 text-xs text-gray-500 mt-2"     ,}
+            , _react2.default.createElement('span', { className: "flex items-center gap-1"  ,}, _react2.default.createElement(_lucidereact.Clock, { className: "w-3 h-3" ,} ), recipe.time, " min" )
+            , _react2.default.createElement('span', { className: "flex items-center gap-1"  ,}, _react2.default.createElement(_lucidereact.Flame, { className: "w-3 h-3" ,} ), recipe.kcal, " kcal" )
+            , _react2.default.createElement('span', null, recipe.protein, "g protein" )
+          )
+          , _react2.default.createElement('p', { className: "mt-2 text-xs text-emerald-700 font-medium"   ,}, "Tap for full recipe →"    )
+        )
+      )
+    )
+  );
+}
+
+function ShoppingCategory({ title, items, tripIdx, cat, checked, onToggle }) {
+  return (
+    _react2.default.createElement('div', null
+      , _react2.default.createElement('h4', { className: "font-bold text-gray-700 text-sm mb-2"   ,}, title)
+      , _react2.default.createElement('ul', { className: "space-y-1.5",}
+        , items.map((item, i) => {
+          const key = `${tripIdx}-${cat}-${i}`;
+          const isChecked = checked[key];
+          return (
+            _react2.default.createElement('li', { key: i,}
+              , _react2.default.createElement('button', {
+                onClick: () => onToggle(key),
+                className: "flex items-start gap-2 w-full text-left text-sm group"      ,}
+
+                , _react2.default.createElement('span', { className: `flex-shrink-0 w-5 h-5 mt-0.5 rounded-md border-2 flex items-center justify-center transition ${
+                  isChecked ? 'bg-emerald-500 border-emerald-500' : 'border-gray-300 group-hover:border-emerald-400'
+                }`,}
+                  , isChecked && _react2.default.createElement(_lucidereact.Check, { className: "w-3 h-3 text-white"  ,} )
+                )
+                , _react2.default.createElement('span', { className: `${isChecked ? 'line-through text-gray-400' : 'text-gray-800'}`,}, item)
+              )
+            )
+          );
+        })
+      )
+    )
+  );
+}
+</script></head>
+  <body>
+  
+
+<div id="preview-app"></div></body></html>
